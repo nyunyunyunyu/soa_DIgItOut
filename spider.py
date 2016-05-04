@@ -31,6 +31,38 @@ def get_content(toUrl):
         sys.exit(-1)
     return req
 
+def impRe(target):
+    info_dict = {}
+    pattern = u'昵称:([^\|]*)\|'
+    m = re.search(pattern,target)
+    if m:
+        info_dict['name'] = m.group(1)
+
+    pattern = u'性别:([^\|])'
+    m = re.search(pattern,target)
+    if m:
+        info_dict['sex'] = m.group(1)
+
+    pattern = u'地区:([^\|]*)'
+    m = re.search(pattern,target)
+    if m:
+        info_dict['hometown'] = m.group(1)
+    return info_dict
+
+def get_info(inputid):
+    time_now = int(time.time())
+    inputUrl = home_page + inputid + info_page
+    print inputUrl
+    tmpContent = get_content(inputUrl)
+    soup = BeautifulSoup(tmpContent.text, "html.parser")
+    # time.sleep(1)
+    divlabel = soup.find_all('div','tip')
+    personalInfo = divlabel[0].next_sibling.get_text('|',strip=True)
+    schoolInfo = divlabel[1].next_sibling.get_text()
+    info_dict = impRe(personalInfo)
+    # get_weibo(inputid)
+    return info_dict
+
 def get_weibo(inputid):
     time_now = int(time.time())
     # inputUrl = home_page + inputid +'/profile'
@@ -46,7 +78,6 @@ def get_weibo(inputid):
     my_weibo_list = []
     for i in xrange(1,maxPage+1):
         s = json.loads(get_content(inputUrl+str(i)).text)
-        showjson(s,0)
         # showjson(s['cards'][0]['card_group'][0],0)
         # showjson(s['cards'][0]['card_group'][0]['mblog']['url_struct'][0]['url_title'],0)
         # showjson(s['cards'][0]['card_group'][0]['mblog']['url_struct'][0],0)
@@ -63,14 +94,20 @@ def get_weibo(inputid):
             if 'source' in weibo:
                 my_weibo['source'] = weibo['source']
             # pics
-            if 'pics' in weibo:
-                my_weibo['pics_url'] = [pics['url'] for pics in weibo['pics']]
+            # if 'pics' in weibo:
+            #     my_weibo['pics_url'] = [pics['url'] for pics in weibo['pics']]
                 # print weibo['pics'][0]['url']
             if 'url_struct' in weibo:
                 if weibo['url_struct'][0]['url_type'] == 36:
                     my_weibo['location'] = weibo['url_struct'][0]['url_title']
             if 'created_at' in weibo:
                 my_weibo['created_at'] = weibo['created_at']
+            if 'thumbnail_pic' in weibo:
+                my_weibo['thumbnail_pic'] = weibo['thumbnail_pic']
+            if 'bmiddle_pic' in weibo:
+                my_weibo['bmiddle_pic'] = weibo['bmiddle_pic']
+            if 'original_pic' in weibo:
+                my_weibo['original_pic'] = weibo['original_pic']
             my_weibo_list.append(my_weibo)
                     # my_weibo['url_type'] = weibo['url_struct'][0]['url_type']
     # showjson(my_weibo_list, 0)
@@ -94,7 +131,7 @@ def showjson(s, count):
             showjson(i, count+1)
 
 def spider(inputid):
-    return get_weibo(inputid)
+    return {'info_dict':get_info(inputid), 'weibo_list':get_weibo(inputid)}
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:

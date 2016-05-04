@@ -5,15 +5,24 @@ spider(inputid)
 ###input:
 	userid
 ###output:
-	weibo_list[
-		weibo{
-			'text':'今天好高兴'
-			'source':'iphone 5s'
-			'pics_url':['url1', 'url2']
-			'location':'温州外滩大厦'
-			'created_at':'04-29 17:25'
-		}
-	]
+	output {
+		'info_dict':{
+			'name':'AnthonyWang',
+			'home':'浙江 温州',
+			'sex':'男'
+		},
+		'weibo_list':[
+			{
+				'text':'今天好高兴',
+				'source':'iphone 5s',
+				'location':'温州外滩大厦',
+				'created_at':'04-29 17:25',
+				'thumbnail_pic': url1,
+				'bmiddle_pic': url2,
+				'original_pic': url3
+			}
+		]
+	}
 	
 一些注意事项：
 
