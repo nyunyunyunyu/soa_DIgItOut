@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 import time
 import re
 import json
+import sys
 
 def get_content(toUrl):
     """ Return the content of given url
@@ -92,12 +93,14 @@ def showjson(s, count):
         for i in s:
             showjson(i, count+1)
 
-def spider(inputid = '2243006675'):
+def spider(inputid):
     return get_weibo(inputid)
 
-
 if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print "Usage: python spider.py <uid>"
+        exit
     print "spider test begin ~~"
     print "----------"
-    my_weibo_list = spider()
+    my_weibo_list = spider(sys.argv[1])
     showjson(my_weibo_list,0)
