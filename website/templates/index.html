@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+
+    <div class="input-group" style="width:50%;text-align:center;margin:0 auto">
+        <input type="text" class="form-control" placeholder="Input Text" id="search-query-3">
+        <span class="input-group-btn">
+        <button id="wordcloud_text" type="submit" class="btn"><span class="fui-star-2"></span></button>
+        </span>
+    </div>
+    
+    <br/>
+
+    <div class="tagsinput-primary" style="width:30%;text-align:center;margin:0 auto">
+        <input id="wordcloud_show" name="tagsinput-02" class="tagsinput" data-role="tagsinput" value="" style="display: none">
+    </div>
+
+    <br/>
+    <br/>
+
+    <script>
+        $('#wordcloud_text').click(function() {
+            var wordcloud_text = $("#search-query-3").val();
+            var d = {data: JSON.stringify({"text": wordcloud_text})};
+              $.ajax("/api/wordcloud", {
+                  type: 'POST',
+                  data: d, 
+                  dataType: 'json',
+                  success: function(dat, sta){
+                      console.log(dat['data']);
+                      var arr = JSON.parse(dat['data']);
+                      console.log(arr);
+                      var val = '';
+                      for(var w in arr){
+                      	console.log(arr[w][1]);
+                      	val += arr[w][1] + ',';
+                      }
+                      $("input[data-role=tagsinput], select[multiple][data-role=tagsinput]").tagsinput()[0].add(val)
+                  }
+              });
+        });
+        
+    </script>
+
+{% endblock %}
