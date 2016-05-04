@@ -45,11 +45,14 @@ def get_weibo(inputid):
     my_weibo_list = []
     for i in xrange(1,maxPage+1):
         s = json.loads(get_content(inputUrl+str(i)).text)
+        showjson(s,0)
         # showjson(s['cards'][0]['card_group'][0],0)
         # showjson(s['cards'][0]['card_group'][0]['mblog']['url_struct'][0]['url_title'],0)
         # showjson(s['cards'][0]['card_group'][0]['mblog']['url_struct'][0],0)
+        if 'card_group' not in s['cards'][0]:
+            continue
         weibo_list = [k['mblog'] for k in s['cards'][0]['card_group']]
-        for weibo in weibo_list[0:10]:
+        for weibo in weibo_list:
             my_weibo = {}
             # showjson(weibo, 0)
             # text
@@ -89,7 +92,7 @@ def showjson(s, count):
         for i in s:
             showjson(i, count+1)
 
-def spider(inputid = '5677086105'):
+def spider(inputid = '2243006675'):
     return get_weibo(inputid)
 
 
