@@ -1,7 +1,15 @@
+#-*- coding:utf-8 -*-
+from __future__ import print_function, unicode_literals
+from bosonnlp import BosonNLP
+
+
 from flask import *
 from flask.ext.bootstrap import Bootstrap
 import requests
 import json
+import re
+import chardet
+
 
 # ...
 app = Flask(__name__)
@@ -37,18 +45,45 @@ def index():
 
 @app.route('/api/wordcloud', methods = ['POST'])
 def api_wordcloud():
-    d = json.loads(request.form.get('data'))
-    print d['text']
-    if d is None:
-        abort(400) # missing arguments
-    headers = {  "Content-Type" : "application/json", "Accept": "application/json", "X-Token": "EGO3bf5q.5590.K4UZUWYVnTIQ"}
-    url = 'http://api.bosonnlp.com/keywords/analysis'
-    r = requests.post(url, data=json.dumps(d['text']), headers=headers)
-    print (r.text)
-    ans = r.text
+    # d = json.loads(request.form.get('data'))
+    # print d['text']
+    # if d is None:
+    #     abort(400) # missing arguments
+    # headers = {  "Content-Type" : "application/json", "Accept": "application/json", "X-Token": "EGO3bf5q.5590.K4UZUWYVnTIQ"}
+    # url = 'http://api.bosonnlp.com/keywords/analysis'
+    # r = requests.post(url, data=json.dumps(d['text']), headers=headers)
+    # print (r.text)
+    # ans = r.text
+    # return jsonify({ 'data': ans }), 201
+    rd = open('./static/my_weibo_list.json', 'r')
+    my_weibo_list = json.loads(rd.read())
+    rd.close()
+
+    alltext = u''
+    import pdb
+    # pdb.set_trace()
+    for item in my_weibo_list['weibo_list']:
+        text = re.sub(r'<[^>]*>', '', item['text'])
+        alltext += text
+
+    # alltext = u'地区地区昵称地区'
+
+    # headers = {  "Content-Type" : "application/json", "Accept": "application/json", "X-Token": "EGO3bf5q.5590.K4UZUWYVnTIQ"}
+    # url = 'http://api.bosonnlp.com/keywords/analysis'
+    # r = requests.post(url, data=json.dumps(alltext).encode('utf-8'), headers=headers)
+    # print chardet.detect(r.text)
+
+    nlp = BosonNLP('EGO3bf5q.5590.K4UZUWYVnTIQ')
+
+    ans = nlp.extract_keywords(alltext, top_k=20)
+    for weight, word in ans:
+        print(weight, word)
+
+    # print (r.text)
+    # ans = json.loads(r.text)
+    # print json.dumps({ 'data': ans })
     return jsonify({ 'data': ans }), 201
     
-
 # @app.route('/user/<name>')
 # def user(name=None):
 #     return render_template('user.html', name=name)

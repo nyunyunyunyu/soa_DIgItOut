@@ -29,11 +29,12 @@
                   dataType: 'json',
                   success: function(dat, sta){
                       console.log(dat['data']);
-                      var arr = JSON.parse(dat['data']);
+                      // var arr = JSON.parse(dat['data']);
+                      var arr = dat['data'];
                       console.log(arr);
                       var val = '';
                       for(var w in arr){
-                      	console.log(arr[w][1]);
+                      	// console.log(arr[w][1]);
                       	val += arr[w][1] + ',';
                       }
                       $("input[data-role=tagsinput], select[multiple][data-role=tagsinput]").tagsinput()[0].add(val)
