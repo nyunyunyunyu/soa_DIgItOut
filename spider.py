@@ -147,8 +147,8 @@ if __name__ == "__main__":
     my_weibo_list = spider(sys.argv[1])
     showjson(my_weibo_list,0)
 
-    wd = open('./website/static/my_weibo_list.json', 'w')
-    wd.write(json.dumps(my_weibo_list))
-    wd.close()
+    # wd = open('./website/static/my_weibo_list.json', 'w')
+    # wd.write(json.dumps(my_weibo_list))
+    # wd.close()
 
     print 'done...'
