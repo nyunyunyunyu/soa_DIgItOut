@@ -12,34 +12,115 @@
     
     <br/>
 
-    <div class="tagsinput-primary" style="width:30%;text-align:center;margin:0 auto">
+    <div class="tagsinput-primary" style="width:500px;height:200px;text-align:center;margin:0 auto">
         <input id="wordcloud_show" name="tagsinput-02" class="tagsinput" data-role="tagsinput" value="" style="display: none">
     </div>
 
+
+    <br/>
+
+    <div id="time-chart" style="width:1000px;height:600px;text-align:center;margin:0 auto"></div>
+
+    <br/>
+
     <br/>
     <br/>
 
-    <script>
+    <script type="text/javascript">
         $('#wordcloud_text').click(function() {
             var wordcloud_text = $("#search-query-3").val();
             var d = {data: JSON.stringify({"text": wordcloud_text})};
-              $.ajax("/api/wordcloud", {
-                  type: 'POST',
-                  data: d, 
-                  dataType: 'json',
-                  success: function(dat, sta){
-                      console.log(dat['data']);
-                      // var arr = JSON.parse(dat['data']);
-                      var arr = dat['data'];
-                      console.log(arr);
-                      var val = '';
-                      for(var w in arr){
-                      	// console.log(arr[w][1]);
-                      	val += arr[w][1] + ',';
-                      }
-                      $("input[data-role=tagsinput], select[multiple][data-role=tagsinput]").tagsinput()[0].add(val)
-                  }
-              });
+            var optiondata;
+            $.ajax("/api/wordcloud", {
+                type: 'POST',
+                data: d, 
+                dataType: 'json',
+                success: function(dat, sta){
+                    console.log(dat['ans']);
+                    // var arr = JSON.parse(dat['data']);
+                    var arr = dat['ans'];
+                    optiondata = dat['time']
+                    console.log(optiondata)
+                    console.log(arr);
+                    var val = '';
+                    for(var w in arr){
+                    	// console.log(arr[w][1]);
+                    	val += arr[w][1] + ',';
+                    }
+                    $("input[data-role=tagsinput], select[multiple][data-role=tagsinput]").tagsinput()[0].add(val)
+
+                    var myChart = echarts.init(document.getElementById('time-chart'));
+
+                    // 指定图表的配置项和数据
+                    var hours = ['12am', '1am', '2am', '3am', '4am', '5am', '6am',
+                            '7am', '8am', '9am','10am','11am',
+                            '12pm', '1pm', '2pm', '3pm', '4pm', '5pm',
+                            '6pm', '7pm', '8pm', '9pm', '10pm', '11pm'];
+                    var days = ['Saturday', 'Friday', 'Thursday',
+                            'Wednesday', 'Tuesday', 'Monday', 'Sunday'];
+
+                    var data = optiondata;
+                    data = data.map(function (item) {
+                        return [item[1], item[0], item[2]];
+                    });
+
+                    option = {
+                        title: {
+                            text: '发博时间分布'
+                        },
+                        legend: {
+                            data: ['Time in Week'],
+                            left: 'right'
+                        },
+                        tooltip: {
+                            position: 'top',
+                            formatter: function (params) {
+                                return params.value[2] + ' posts in ' + hours[params.value[0]] + ' of ' + days[params.value[1]];
+                            }
+                        },
+                        grid: {
+                            left: 2,
+                            bottom: 10,
+                            right: 10,
+                            containLabel: true
+                        },
+                        xAxis: {
+                            type: 'category',
+                            data: hours,
+                            boundaryGap: false,
+                            splitLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: '#ddd',
+                                    type: 'dashed'
+                                }
+                            },
+                            axisLine: {
+                                show: false
+                            }
+                        },
+                        yAxis: {
+                            type: 'category',
+                            data: days,
+                            axisLine: {
+                                show: false
+                            }
+                        },
+                        series: [{
+                            name: 'Punch Card',
+                            type: 'scatter',
+                            symbolSize: function (val) {
+                                return val[2];
+                            },
+                            data: data
+                        }]
+                    };
+                  // 使用刚指定的配置项和数据显示图表。
+                  myChart.setOption(option);
+
+                }
+            });
+            
         });
         
     </script>
