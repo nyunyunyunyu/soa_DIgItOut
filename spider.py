@@ -9,8 +9,9 @@ import time
 import re
 import json
 import sys
+import login
 
-def get_content(toUrl):
+def get_content(toUrl, cookdic):
     """ Return the content of given url
         Args:
             toUrl: aim url
@@ -20,7 +21,7 @@ def get_content(toUrl):
             'Fail' if fail
     """
 
-    cookdic = dict(Cookie=cookie)
+    # cookdic = dict(Cookie=cookie)
 
     try:
         req = requests.get(toUrl,cookies = cookdic, timeout=100)
@@ -49,11 +50,10 @@ def impRe(target):
         info_dict['hometown'] = m.group(1)
     return info_dict
 
-def get_info(inputid):
+def get_info(inputid, cookdic):
     time_now = int(time.time())
     inputUrl = home_page + inputid + info_page
-    print inputUrl
-    tmpContent = get_content(inputUrl)
+    tmpContent = get_content(inputUrl, cookdic)
     soup = BeautifulSoup(tmpContent.text, "html.parser")
     # time.sleep(1)
     divlabel = soup.find_all('div','tip')
@@ -63,11 +63,11 @@ def get_info(inputid):
     # get_weibo(inputid)
     return info_dict
 
-def get_weibo(inputid):
+def get_weibo(inputid, cookdic):
     time_now = int(time.time())
     # inputUrl = home_page + inputid +'/profile'
     inputUrl = 'http://m.weibo.cn/page/json?containerid=100505'+inputid+'_-_WEIBO_SECOND_PROFILE_WEIBO&page='
-    tmpContent = get_content(inputUrl+'1')
+    tmpContent = get_content(inputUrl+'1', cookdic)
     s = json.loads(tmpContent.text)
         # print a.keys()
     # showjson(s, 0)
@@ -77,12 +77,14 @@ def get_weibo(inputid):
         maxPage = 1
     my_weibo_list = []
     for i in xrange(1,maxPage+1):
-        s = json.loads(get_content(inputUrl+str(i)).text)
+        print "Page %d" % i
+        s = json.loads(get_content(inputUrl+str(i), cookdic).text)
         # showjson(s['cards'][0]['card_group'][0],0)
         # showjson(s['cards'][0]['card_group'][0]['mblog']['url_struct'][0]['url_title'],0)
         # showjson(s['cards'][0]['card_group'][0]['mblog']['url_struct'][0],0)
         if 'card_group' not in s['cards'][0]:
             continue
+        print s
         weibo_list = [k['mblog'] for k in s['cards'][0]['card_group']]
         for weibo in weibo_list:
             my_weibo = {}
@@ -131,7 +133,9 @@ def showjson(s, count):
             showjson(i, count+1)
 
 def spider(inputid):
-    return {'info_dict':get_info(inputid), 'weibo_list':get_weibo(inputid)}
+    # 'info_dict':get_info(inputid),
+    cookdic = login.getCookies([{'no':username, 'psw':password}])[0]
+    return { 'weibo_list':get_weibo(inputid, cookdic)}
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
