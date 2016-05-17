@@ -1,6 +1,6 @@
 #-*- coding:utf-8 -*-
-from __future__ import print_function, unicode_literals
-from bosonnlp import BosonNLP
+# from __future__ import print_function, unicode_literals
+# from bosonnlp import BosonNLP
 
 
 from flask import *
@@ -46,16 +46,19 @@ def index():
 
 @app.route('/api/wordcloud', methods = ['POST'])
 def api_wordcloud():
-    # d = json.loads(request.form.get('data'))
-    # print d['text']
-    # if d is None:
-    #     abort(400) # missing arguments
+    d = json.loads(request.form.get('data'))
+    if d is None:
+        abort(400) # missing arguments
     # headers = {  "Content-Type" : "application/json", "Accept": "application/json", "X-Token": "EGO3bf5q.5590.K4UZUWYVnTIQ"}
     # url = 'http://api.bosonnlp.com/keywords/analysis'
     # r = requests.post(url, data=json.dumps(d['text']), headers=headers)
     # print (r.text)
     # ans = r.text
     # return jsonify({ 'data': ans }), 201
+
+    id_str = d['text']
+    print (id_str)
+
     rd = open('./static/my_weibo_list.json', 'r')
     my_weibo_list = json.loads(rd.read())
     rd.close()
@@ -75,11 +78,19 @@ def api_wordcloud():
     # print chardet.detect(r.text)
 
     # sentiment
-    nlp = BosonNLP('EGO3bf5q.5590.K4UZUWYVnTIQ')
-    ans = nlp.extract_keywords(alltext, top_k=40)
-    for weight, word in ans:
-        print(weight, word)
+    # nlp = BosonNLP('EGO3bf5q.5590.K4UZUWYVnTIQ')
+    # ans = nlp.extract_keywords(alltext, top_k=40)
+    # for weight, word in ans:
+    #     print(weight, word)
 
+    # 437c5088a88bbf2a3e1ffc15abb469a2
+    data = {'appkey': '258bbb3f7adf4c0e7fb74129d59865e9', 'text': alltext[0:600]}
+    # 
+    url = 'http://qingyu.thunlp.org/api/KeywordExtract'
+    r = requests.post(url, data=data)
+    print (r.text)
+    ans = json.loads(r.text)['Result']
+    print ans[0]
     # time
     # week = {'0': [], '1': [], '2': [], '3': [], '4': [], '5': [], '6': []}
     temp_time = [[0]*24, [0]*24, [0]*24, [0]*24, [0]*24, [0]*24, [0]*24]

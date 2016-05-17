@@ -1,7 +1,16 @@
 {% extends "base.html" %}
 
-{% block body %}
+{% block head %}
+    <style type="text/css">
+        #allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+        #l-map{height:100%;width:78%;float:left;border-right:2px solid #bcbcbc;}
+        #r-result{height:100%;width:20%;float:left;}
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=akf1Q4p6UlmyZddPl1vhZKBdKm5Cldls"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/library/CurveLine/1.5/src/CurveLine.min.js"></script>
+{% endblock %}
 
+{% block body %}
 
     <div class="input-group" style="width:50%;text-align:center;margin:0 auto">
         <input type="text" class="form-control" placeholder="Input Text" id="search-query-3">
@@ -22,6 +31,8 @@
     <div id="time-chart" style="width:1200px;height:600px;text-align:center;margin:0 auto"></div>
 
     <br/>
+
+    <div id="trace-map" style="width:1200px;height:600px;text-align:center;margin:0 auto"></div>
 
     <br/>
     <br/>
@@ -45,15 +56,14 @@
                     var val = '';
                     for(var w in arr){
                     	// console.log(arr[w][1]);
-                    	val += arr[w][1] + ',';
+                    	val += arr[w][0] + ',';
                     }
                     $("input[data-role=tagsinput], select[multiple][data-role=tagsinput]").tagsinput()[0].add(val)
 
                     var myChart = echarts.init(document.getElementById('time-chart'));
 
                     // 指定图表的配置项和数据
-                    var hours = ['12am', '1am', '2am', '3am', '4am', '5am', '6am',
-                            '7am', '8am', '9am','10am','11am',
+                    var hours = ['0am', '1am', '2am', '3am', '4am', '5am', '6am', '7am', '8am', '9am','10am','11am',
                             '12pm', '1pm', '2pm', '3pm', '4pm', '5pm',
                             '6pm', '7pm', '8pm', '9pm', '10pm', '11pm'];
                     var days = ['Saturday', 'Friday', 'Thursday',
@@ -123,6 +133,27 @@
             
         });
         
+        // 百度地图API功能
+        var map = new BMap.Map("trace-map");
+        map.centerAndZoom(new BMap.Point(116.404, 39.915), 6);
+        // 编写自定义函数,创建标注
+        function addMarker(point){
+          var marker = new BMap.Marker(point);
+          map.addOverlay(marker);
+        }
+        map.enableScrollWheelZoom();
+        // 随机向地图添加25个标注
+        var beijingPosition=new BMap.Point(116.432045,39.910683),
+            hangzhouPosition=new BMap.Point(120.129721,30.314429),
+            taiwanPosition=new BMap.Point(121.491121,25.127053);
+        var points = [beijingPosition,hangzhouPosition, taiwanPosition];
+        for(var i in points){
+            addMarker(points[i]);
+        }
+        var curve = new BMapLib.CurveLine(points, {strokeColor:"blue", strokeWeight:3, strokeOpacity:0.5}); //创建弧线对象
+        map.addOverlay(curve); //添加到地图中
+        // curve.enableEditing(); //开启编辑功能
+
     </script>
 
 {% endblock %}
