@@ -15,7 +15,9 @@ spider(inputid)
 			{
 				'text':'今天好高兴',
 				'source':'iphone 5s',
-				'location':'温州外滩大厦',
+				'location_name':'瑞安·锦湖街区',
+				'location_lon':'120.62851',
+				'location_lat':'27.79679',
 				'created_at':'04-29 17:25',
 				'thumbnail_pic': url1,
 				'bmiddle_pic': url2,
@@ -23,10 +25,10 @@ spider(inputid)
 			}
 		]
 	}
-	
+
 一些注意事项：
 
-location可能会有些问题，有时候会不一定是这个人发表微博的地址。
+location中对check-in的地址信息还没正确考虑，发微博自带的地址可以找到经纬度。（不过需要自己找cookie才行）
 
 created_at有时候会是10分钟前这种情况。
 
