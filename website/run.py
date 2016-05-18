@@ -90,9 +90,10 @@ def api_wordcloud():
     r = requests.post(url, data=data)
     print (r.text)
     ans = json.loads(r.text)['Result']
-    print ans[0]
+    # print ans[0]
     # time
-    # week = {'0': [], '1': [], '2': [], '3': [], '4': [], '5': [], '6': []}
+    weekchart = [0]*7
+    daychart = [0]*24
     temp_time = [[0]*24, [0]*24, [0]*24, [0]*24, [0]*24, [0]*24, [0]*24]
     for item in my_weibo_list['weibo_list']:
         if not '-' in item['created_at']:
@@ -104,8 +105,8 @@ def api_wordcloud():
             w = str(datetime.datetime(int(time.strftime('%Y')), int(date[0]),int(date[1])).strftime("%w"))
         elif len(date)==3:
             w = str(datetime.datetime(int(date[0]),int(date[1]),int(date[2])).strftime("%w"))
-        # week[ w ].append( ti[1] )
-        # timepoint.append( [int(w), int(ti[1].split(':')[0])*60+int(ti[1].split(':')[1]) ] )
+        weekchart[ (7-int(w)) %7 ] += 1
+        daychart[ (24-int(ti[1].split(':')[0])) %24 ] += 1
         temp_time[ int(w) ][ int(ti[1].split(':')[0]) ] += 1
 
     timepoint = []
@@ -113,7 +114,10 @@ def api_wordcloud():
         for j in range(24):
             timepoint.append([i, j, temp_time[i][j]])
 
-    return jsonify({ 'ans': ans, 'time': timepoint }), 201
+    print weekchart
+    print daychart
+
+    return jsonify({ 'ans': ans, 'time': timepoint, 'week': weekchart, 'day': daychart}), 201
     
 # @app.route('/user/<name>')
 # def user(name=None):
