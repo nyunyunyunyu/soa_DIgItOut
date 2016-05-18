@@ -1,7 +1,16 @@
 {% extends "base.html" %}
 
-{% block body %}
+{% block head %}
+    <style type="text/css">
+        #allmap {width: 100%;height: 100%;overflow: hidden;margin:0;}
+        #l-map{height:100%;width:78%;float:left;border-right:2px solid #bcbcbc;}
+        #r-result{height:100%;width:20%;float:left;}
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=akf1Q4p6UlmyZddPl1vhZKBdKm5Cldls"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/library/CurveLine/1.5/src/CurveLine.min.js"></script>
+{% endblock %}
 
+{% block body %}
 
     <div class="input-group" style="width:50%;text-align:center;margin:0 auto">
         <input type="text" class="form-control" placeholder="Input Text" id="search-query-3">
@@ -22,15 +31,31 @@
     <div id="time-chart" style="width:1200px;height:600px;text-align:center;margin:0 auto"></div>
 
     <br/>
+    
+    <div id="week-day-chart" style="width:1000px;height:500px;text-align:center;margin:0 auto">
+        <div id="week-chart" style="float:left;height:500px;width:500px">
+            <!-- week-chart -->
+        </div>
+        <div id="day-chart" style="float:left;height:500px;width:500px">
+            <!-- day-chart -->
+        </div>
+        <div style="clear:both"></div><!--这个层很有用，必须要，否则可能不兼容。--> 
+    </div>
+    
+    <br />
+
+    <div id="trace-map" style="width:1200px;height:600px;text-align:center;margin:0 auto"></div>
 
     <br/>
     <br/>
 
-    <script type="text/javascript">
+    <script type="text/javascript">        
         $('#wordcloud_text').click(function() {
             var wordcloud_text = $("#search-query-3").val();
             var d = {data: JSON.stringify({"text": wordcloud_text})};
             var optiondata;
+            var dataByWeek;
+            var dataByDay;
             $.ajax("/api/wordcloud", {
                 type: 'POST',
                 data: d, 
@@ -40,20 +65,35 @@
                     // var arr = JSON.parse(dat['data']);
                     var arr = dat['ans'];
                     optiondata = dat['time']
-                    console.log(optiondata)
+                    dataByWeek = dat['week']
+                    dataByDay = dat['day']
+
+                    getMax = function(cc){
+                        var c = -1;
+                        for(var i in cc){
+                            if(cc[i]>c){
+                                c = cc[i];
+                            }
+                        }
+                        return c;
+                    };
+
+                    dataByWeek_max = getMax(dataByWeek)*1.1;
+                    dataByDay_max = getMax(dataByDay)*1.1;
+
+                    console.log(optiondata);
                     console.log(arr);
                     var val = '';
                     for(var w in arr){
                     	// console.log(arr[w][1]);
-                    	val += arr[w][1] + ',';
+                    	val += arr[w][0] + ',';
                     }
                     $("input[data-role=tagsinput], select[multiple][data-role=tagsinput]").tagsinput()[0].add(val)
 
                     var myChart = echarts.init(document.getElementById('time-chart'));
 
                     // 指定图表的配置项和数据
-                    var hours = ['12am', '1am', '2am', '3am', '4am', '5am', '6am',
-                            '7am', '8am', '9am','10am','11am',
+                    var hours = ['0am', '1am', '2am', '3am', '4am', '5am', '6am', '7am', '8am', '9am','10am','11am',
                             '12pm', '1pm', '2pm', '3pm', '4pm', '5pm',
                             '6pm', '7pm', '8pm', '9pm', '10pm', '11pm'];
                     var days = ['Saturday', 'Friday', 'Thursday',
@@ -115,14 +155,220 @@
                             data: data
                         }]
                     };
-                  // 使用刚指定的配置项和数据显示图表。
-                  myChart.setOption(option);
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart.setOption(option);
 
+
+                    //left week-chart
+                    var weekChart = echarts.init(document.getElementById('week-chart'));
+
+                    var lineStyle = {
+                        normal: {
+                            width: 1,
+                            opacity: 0.5
+                        }
+                    };
+                    console.log(dataByWeek);
+                    console.log(dataByDay);
+                    dataByWeek = [dataByWeek];
+                    dataByDay = [dataByDay];
+                    weekOption = {
+                        backgroundColor: '#2f4154',
+                        title: {
+                            text: '发博时间分布 by week',
+                            left: 'center',
+                            textStyle: {
+                                color: '#eee'
+                            }
+                        },
+                        // visualMap: {
+                        //     show: true,
+                        //     min: 0,
+                        //     max: 20,
+                        //     dimension: 6,
+                        //     inRange: {
+                        //         colorLightness: [0.5, 0.8]
+                        //     }
+                        // },
+                        radar: {
+                            indicator: [
+                                {name: 'Sun.', max: dataByWeek_max},
+                                {name: 'Sat.', max: dataByWeek_max},
+                                {name: 'Fri.', max: dataByWeek_max},
+                                {name: 'Thur.', max: dataByWeek_max},
+                                {name: 'Wed.', max: dataByWeek_max},
+                                {name: 'Thu.', max: dataByWeek_max},
+                                {name: 'Mon.', max: dataByWeek_max}
+                            ],
+                            shape: 'circle',
+                            splitNumber: 5,
+                            name: {
+                                textStyle: {
+                                    color: 'rgb(238, 197, 102)'
+                                }
+                            },
+                            splitLine: {
+                                lineStyle: {
+                                    color: [
+                                        'rgba(238, 197, 102, 0.1)', 'rgba(238, 197, 102, 0.2)',
+                                        'rgba(238, 197, 102, 0.4)', 'rgba(238, 197, 102, 0.6)',
+                                        'rgba(238, 197, 102, 0.8)', 'rgba(238, 197, 102, 1)'
+                                    ].reverse()
+                                }
+                            },
+                            splitArea: {
+                                show: false
+                            },
+                            axisLine: {
+                                lineStyle: {
+                                    color: 'rgba(238, 197, 102, 0.5)'
+                                }
+                            }
+                        },
+                        series: [
+                            {
+                                name: 'byWeek',
+                                type: 'radar',
+                                lineStyle: lineStyle,
+                                data: dataByWeek,
+                                symbol: 'none',
+                                itemStyle: {
+                                    normal: {
+                                        color: '#F9713C'
+                                    }
+                                },
+                                areaStyle: {
+                                    normal: {
+                                        opacity: 0.1
+                                    }
+                                }
+                            }
+                        ]
+                    };
+                    // 指定图表的配置项和数据
+                    weekChart.setOption(weekOption);
+
+                    //right day-chart
+                    var dayChart = echarts.init(document.getElementById('day-chart'));
+
+                    dayOption = {
+                        backgroundColor: '#2f4154',
+                        title: {
+                            text: '发博时间分布 by day',
+                            left: 'center',
+                            textStyle: {
+                                color: '#eee'
+                            }
+                        },
+                        // visualMap: {
+                        //     show: true,
+                        //     min: 0,
+                        //     max: 20,
+                        //     dimension: 6,
+                        //     inRange: {
+                        //         colorLightness: [0.5, 0.8]
+                        //     }
+                        // },
+                        radar: {
+                            indicator: [
+                                {name: '00:00', max: dataByDay_max},
+                                {name: '23:00', max: dataByDay_max},
+                                {name: '22:00', max: dataByDay_max},
+                                {name: '21:00', max: dataByDay_max},
+                                {name: '20:00', max: dataByDay_max},
+                                {name: '19:00', max: dataByDay_max},
+                                {name: '18:00', max: dataByDay_max},
+                                {name: '17:00', max: dataByDay_max},
+                                {name: '16:00', max: dataByDay_max},
+                                {name: '15:00', max: dataByDay_max},
+                                {name: '14:00', max: dataByDay_max},
+                                {name: '13:00', max: dataByDay_max},
+                                {name: '12:00', max: dataByDay_max},
+                                {name: '11:00', max: dataByDay_max},
+                                {name: '10:00', max: dataByDay_max},
+                                {name: '09:00', max: dataByDay_max},
+                                {name: '08:00', max: dataByDay_max},
+                                {name: '07:00', max: dataByDay_max},
+                                {name: '06:00', max: dataByDay_max},
+                                {name: '05:00', max: dataByDay_max},
+                                {name: '04:00', max: dataByDay_max},
+                                {name: '03:00', max: dataByDay_max},
+                                {name: '02:00', max: dataByDay_max},
+                                {name: '01:00', max: dataByDay_max}
+                            ],
+                            shape: 'circle',
+                            splitNumber: 5,
+                            name: {
+                                textStyle: {
+                                    color: 'rgb(238, 197, 102)'
+                                }
+                            },
+                            splitLine: {
+                                lineStyle: {
+                                    color: [
+                                        'rgba(238, 197, 102, 0.1)', 'rgba(238, 197, 102, 0.2)',
+                                        'rgba(238, 197, 102, 0.4)', 'rgba(238, 197, 102, 0.6)',
+                                        'rgba(238, 197, 102, 0.8)', 'rgba(238, 197, 102, 1)'
+                                    ].reverse()
+                                }
+                            },
+                            splitArea: {
+                                show: false
+                            },
+                            axisLine: {
+                                lineStyle: {
+                                    color: 'rgba(238, 197, 102, 0.5)'
+                                }
+                            }
+                        },
+                        series: [
+                            {
+                                name: 'byDay',
+                                type: 'radar',
+                                lineStyle: lineStyle,
+                                data: dataByDay,
+                                symbol: 'none',
+                                itemStyle: {
+                                    normal: {
+                                        color: '#F9713C'
+                                    }
+                                },
+                                areaStyle: {
+                                    normal: {
+                                        opacity: 0.1
+                                    }
+                                }
+                            }
+                        ]
+                    };
+                    // 指定图表的配置项和数据
+                    dayChart.setOption(dayOption);
                 }
             });
             
         });
         
+        // 百度地图API功能
+        var map = new BMap.Map("trace-map");
+        map.centerAndZoom(new BMap.Point(116.404, 39.915), 6);
+        // 编写自定义函数,创建标注
+        function addMarker(point){
+          var marker = new BMap.Marker(point);
+          map.addOverlay(marker);
+        }
+        map.enableScrollWheelZoom();
+        // 随机向地图添加25个标注
+        var beijingPosition=new BMap.Point(116.432045,39.910683),
+            hangzhouPosition=new BMap.Point(120.129721,30.314429),
+            taiwanPosition=new BMap.Point(121.491121,25.127053);
+        var points = [beijingPosition,hangzhouPosition, taiwanPosition];
+        for(var i in points){
+            addMarker(points[i]);
+        }
+        var curve = new BMapLib.CurveLine(points, {strokeColor:"blue", strokeWeight:3, strokeOpacity:0.5}); //创建弧线对象
+        map.addOverlay(curve); //添加到地图中
+        // curve.enableEditing(); //开启编辑功能
+
     </script>
 
 {% endblock %}
