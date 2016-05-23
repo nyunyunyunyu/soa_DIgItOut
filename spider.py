@@ -27,9 +27,13 @@ def showjson(s, count):
 
 
 class Spider:
+
+    def updateCookie(self):
+        cookie = "SINAGLOBAL=9680108074098.826.1461898907956; wb_publish_vip_2031727173=4; wb_bub_hot_5894427394=1; YF-Ugrow-G0=b02489d329584fca03ad6347fc915997; YF-V5-G0=2a21d421b35f7075ad5265885eabb1e4; _s_tentry=login.sina.com.cn; Apache=5034842943168.573.1463327257571; ULV=1463327257606:3:2:1:5034842943168.573.1463327257571:1462236550964; YF-Page-G0=f1bc83fe81b7ae21d6ba1fa7afc24fde; TC-Ugrow-G0=370f21725a3b0b57d0baaf8dd6f16a18; TC-Page-G0=a1e213552523eaff2a80326cc1068982; TC-V5-G0=ffc89a27ffa5c92ffdaf08972449df02; login_sid_t=1ebbc46ab3073f2bc84ca0c7e9bedfaa; myuid=5894427394; UOR=www.aizhan.com,widget.weibo.com,login.sina.com.cn; SUS=SID-5894427394-1463492620-GZ-kiuoz-1fc0200559879aee440b2430283c2161; SUE=es%3Da1802f75c5ae011bfd01b028431d781e%26ev%3Dv1%26es2%3D379a04ee0329d81efd4b1b6d55695c86%26rs0%3DF7PrH9J4nF32pB1mHLGHSPeRXA1v0XQw020cRvtjlUK%252F5unHTZYwR5NcZ3%252BglwU5stca6N8Ys8AELbapHju9eJ%252FmGRQoHVIm5CBTJGuFA5QDUKBK0kTSgnEmQ%252FHoqcS6SQkY2uQNVLmpMWjOFmKx%252BJAKSNlgDjWcmSNm5mygkzw%253D%26rv%3D0; SUP=cv%3D1%26bt%3D1463492620%26et%3D1463579020%26d%3Dc909%26i%3D2161%26us%3D1%26vf%3D0%26vt%3D0%26ac%3D2%26st%3D0%26uid%3D5894427394%26name%3Dsoadigitout%2540itispxm.com%26nick%3Ddigitout%26fmp%3D%26lcp%3D; SUB=_2A256P1BcDeTxGeNG4lYV8inPwjiIHXVZTcaUrDV8PUNbuNBeLVqtkW9LHeuKWr-9jL2byC7J1ffaV4-jX1xV-A..; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WFSmMZEdn1kmBrdvnWgNJZF5JpX5K2hUgL.Fo-R1KBXeoM01KBt; SUHB=04W-9u9K83Swbj; ALF=1495028620; SSOLoginState=1463492620; un=soaDigItOut@itispxm.com; wvr=6; lzstat_uv=23978883723075672468|2893156; lzstat_ss=2356230116_1_1463524403_2893156; WBtopGlobal_register_version=60539f809b40ed0d"
+        self.cookdic = dict(Cookie = cookie)
+
     def __init__(self):
-        self.cookie = "SINAGLOBAL=9680108074098.826.1461898907956; wb_publish_vip_2031727173=4; wb_bub_hot_5894427394=1; YF-Ugrow-G0=b02489d329584fca03ad6347fc915997; YF-V5-G0=2a21d421b35f7075ad5265885eabb1e4; _s_tentry=login.sina.com.cn; Apache=5034842943168.573.1463327257571; ULV=1463327257606:3:2:1:5034842943168.573.1463327257571:1462236550964; YF-Page-G0=f1bc83fe81b7ae21d6ba1fa7afc24fde; TC-Ugrow-G0=370f21725a3b0b57d0baaf8dd6f16a18; TC-Page-G0=a1e213552523eaff2a80326cc1068982; TC-V5-G0=ffc89a27ffa5c92ffdaf08972449df02; login_sid_t=1ebbc46ab3073f2bc84ca0c7e9bedfaa; myuid=5894427394; UOR=www.aizhan.com,widget.weibo.com,login.sina.com.cn; SUS=SID-5894427394-1463492620-GZ-kiuoz-1fc0200559879aee440b2430283c2161; SUE=es%3Da1802f75c5ae011bfd01b028431d781e%26ev%3Dv1%26es2%3D379a04ee0329d81efd4b1b6d55695c86%26rs0%3DF7PrH9J4nF32pB1mHLGHSPeRXA1v0XQw020cRvtjlUK%252F5unHTZYwR5NcZ3%252BglwU5stca6N8Ys8AELbapHju9eJ%252FmGRQoHVIm5CBTJGuFA5QDUKBK0kTSgnEmQ%252FHoqcS6SQkY2uQNVLmpMWjOFmKx%252BJAKSNlgDjWcmSNm5mygkzw%253D%26rv%3D0; SUP=cv%3D1%26bt%3D1463492620%26et%3D1463579020%26d%3Dc909%26i%3D2161%26us%3D1%26vf%3D0%26vt%3D0%26ac%3D2%26st%3D0%26uid%3D5894427394%26name%3Dsoadigitout%2540itispxm.com%26nick%3Ddigitout%26fmp%3D%26lcp%3D; SUB=_2A256P1BcDeTxGeNG4lYV8inPwjiIHXVZTcaUrDV8PUNbuNBeLVqtkW9LHeuKWr-9jL2byC7J1ffaV4-jX1xV-A..; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WFSmMZEdn1kmBrdvnWgNJZF5JpX5K2hUgL.Fo-R1KBXeoM01KBt; SUHB=04W-9u9K83Swbj; ALF=1495028620; SSOLoginState=1463492620; un=soaDigItOut@itispxm.com; wvr=6; lzstat_uv=23978883723075672468|2893156; lzstat_ss=2356230116_1_1463524403_2893156; WBtopGlobal_register_version=60539f809b40ed0d"
-        cookdic = dict(Cookie=self.cookie)
+        self.updateCookie()
 
     def get_content(self, toUrl):
         """ Return the content of given url
@@ -44,7 +48,7 @@ class Spider:
         # cookdic = dict(Cookie=cookie)
 
         try:
-            req = requests.get(toUrl, cookies=self.cookdic, timeout=100)
+            req = requests.get(toUrl, cookies = self.cookdic, timeout=100)
         except:
             return None
         if req.status_code != requests.codes.ok:
