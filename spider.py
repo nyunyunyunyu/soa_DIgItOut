@@ -10,7 +10,7 @@ import re
 import json
 import sys
 import login
-
+import pymongo
 
 def showjson(s, count):
     ss = '----'
@@ -44,8 +44,6 @@ class Spider:
                 content if success
                 'Fail' if fail
         """
-
-        # cookdic = dict(Cookie=cookie)
 
         try:
             req = requests.get(toUrl, cookies = self.cookdic, timeout=100)
@@ -169,11 +167,9 @@ class Spider:
                 if 'original_pic' in weibo:
                     my_weibo['original_pic'] = weibo['original_pic']
                 my_weibo_list.append(my_weibo)
-                # my_weibo['url_type'] = weibo['url_struct'][0]['url_type']
+
         showjson(my_weibo_list, 0)
         return my_weibo_list
-        # for my_weibo in my_weibo_list:
-        #     print my_weibo
 
     def impRe(self, target):
         info_dict = {}
@@ -195,10 +191,10 @@ class Spider:
 
     def get_info(self, inputid):
         time_now = int(time.time())
-        inputUrl = home_page + inputid + info_page
+        inputUrl = HOME_PAGE + inputid + INFO_PAGE
         tmpContent = self.get_content(inputUrl)
         soup = BeautifulSoup(tmpContent.text, "html.parser")
-        # time.sleep(1)
+
         divlabel = soup.find_all('div', 'tip')
         personalInfo = divlabel[0].next_sibling.get_text('|', strip=True)
         schoolInfo = divlabel[1].next_sibling.get_text()
