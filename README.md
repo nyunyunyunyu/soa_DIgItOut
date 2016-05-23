@@ -1,5 +1,8 @@
 # soa_DIgItOut
 Dig It Out Project
+## Environment Requirement
+MongoDB
+PyMongo
 ## interface of the spider:
 spider(inputid)
 ###input:
@@ -37,3 +40,4 @@ text中经常会有html的一些类似于\<span\>这种的东西。
 cookie每次需要更新
 
 直接运行spider.py可以查看得到的微博结果
+

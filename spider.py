@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from constant import *
+import constant
 import requests
 import gzip
 import StringIO
@@ -11,6 +11,7 @@ import json
 import sys
 import login
 import pymongo
+
 
 def showjson(s, count):
     ss = '----'
@@ -27,13 +28,15 @@ def showjson(s, count):
 
 
 class Spider:
-
     def updateCookie(self):
-        cookie = "SINAGLOBAL=9680108074098.826.1461898907956; wb_publish_vip_2031727173=4; wb_bub_hot_5894427394=1; YF-Ugrow-G0=b02489d329584fca03ad6347fc915997; YF-V5-G0=2a21d421b35f7075ad5265885eabb1e4; _s_tentry=login.sina.com.cn; Apache=5034842943168.573.1463327257571; ULV=1463327257606:3:2:1:5034842943168.573.1463327257571:1462236550964; YF-Page-G0=f1bc83fe81b7ae21d6ba1fa7afc24fde; TC-Ugrow-G0=370f21725a3b0b57d0baaf8dd6f16a18; TC-Page-G0=a1e213552523eaff2a80326cc1068982; TC-V5-G0=ffc89a27ffa5c92ffdaf08972449df02; login_sid_t=1ebbc46ab3073f2bc84ca0c7e9bedfaa; myuid=5894427394; UOR=www.aizhan.com,widget.weibo.com,login.sina.com.cn; SUS=SID-5894427394-1463492620-GZ-kiuoz-1fc0200559879aee440b2430283c2161; SUE=es%3Da1802f75c5ae011bfd01b028431d781e%26ev%3Dv1%26es2%3D379a04ee0329d81efd4b1b6d55695c86%26rs0%3DF7PrH9J4nF32pB1mHLGHSPeRXA1v0XQw020cRvtjlUK%252F5unHTZYwR5NcZ3%252BglwU5stca6N8Ys8AELbapHju9eJ%252FmGRQoHVIm5CBTJGuFA5QDUKBK0kTSgnEmQ%252FHoqcS6SQkY2uQNVLmpMWjOFmKx%252BJAKSNlgDjWcmSNm5mygkzw%253D%26rv%3D0; SUP=cv%3D1%26bt%3D1463492620%26et%3D1463579020%26d%3Dc909%26i%3D2161%26us%3D1%26vf%3D0%26vt%3D0%26ac%3D2%26st%3D0%26uid%3D5894427394%26name%3Dsoadigitout%2540itispxm.com%26nick%3Ddigitout%26fmp%3D%26lcp%3D; SUB=_2A256P1BcDeTxGeNG4lYV8inPwjiIHXVZTcaUrDV8PUNbuNBeLVqtkW9LHeuKWr-9jL2byC7J1ffaV4-jX1xV-A..; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WFSmMZEdn1kmBrdvnWgNJZF5JpX5K2hUgL.Fo-R1KBXeoM01KBt; SUHB=04W-9u9K83Swbj; ALF=1495028620; SSOLoginState=1463492620; un=soaDigItOut@itispxm.com; wvr=6; lzstat_uv=23978883723075672468|2893156; lzstat_ss=2356230116_1_1463524403_2893156; WBtopGlobal_register_version=60539f809b40ed0d"
-        self.cookdic = dict(Cookie = cookie)
+        cookie = "SINAGLOBAL=1235433884430.6768.1430467351374; wb_publish_vip_2243006675=1; wb_bub_hot_5894427394=1; un=soadigitout@itispxm.com; myuid=5894427394; UOR=,,www.google.com.hk; YF-Page-G0=f70469e0b5607cacf38b47457e34254f; _s_tentry=-; Apache=8905100007286.064.1463722207724; ULV=1463722207739:24:3:2:8905100007286.064.1463722207724:1463500634206; YF-V5-G0=d45b2deaf680307fa1ec077ca90627d1; login_sid_t=79f68dfea5288dec7ccfc85f90279308; YF-Ugrow-G0=169004153682ef91866609488943c77f; SUS=SID-5894427394-1463989169-GZ-rw4j8-cf39c09610a7383c46b8a8691fd7201c; SUE=es%3D0e94e7489b4e57f97e41c15066e22a8d%26ev%3Dv1%26es2%3D83e78fa0bb20b7c192e0df2abaa6b7bf%26rs0%3DP1SyU%252BCEDt9RLimVJJwOhRPT3L2OgOO%252FWEgM9n19ySrTovZQcQccZA7Dh3XH6Uu2lGh7kq9TSI6HZgITOk0l4pHGtATJ746I%252Fm6auLSH9xlbTmIhIOX21HS9EyhMJUDQ4W2oc%252FSKNGgn%252BG9NX0tFTmfkq%252FNi5BnstpiO1PoGFjM%253D%26rv%3D0; SUP=cv%3D1%26bt%3D1463989169%26et%3D1464075569%26d%3Dc909%26i%3D201c%26us%3D1%26vf%3D0%26vt%3D0%26ac%3D0%26st%3D0%26uid%3D5894427394%26name%3Dsoadigitout%2540itispxm.com%26nick%3Ddigitout%26fmp%3D%26lcp%3D; SUB=_2A256RsPhDeTxGeNG4lYV8inPwjiIHXVZNbIprDV8PUNbuNBeLU73kW9LHetDCOiyqLcYZzcHm4NBqZm87X4Zsg..; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WFSmMZEdn1kmBrdvnWgNJZF5JpX5K2hUgL.Fo-R1KBXeoM01KBt; SUHB=06ZVejbtcampjD; ALF=1495525168; SSOLoginState=1463989169"
+        self.cookdic = dict(Cookie=cookie)
 
     def __init__(self):
         self.updateCookie()
+        self.client = pymongo.MongoClient(constant.MONGODB_HOST, constant.MONGODB_PORT)
+        if (not 'soa' in self.client.database_names() or not 'weibo' in self.client['soa'].collection_names()):
+            self.client['soa']['weibo'].create_index([('uid', pymongo.ASCENDING)], unique=True)
 
     def get_content(self, toUrl):
         """ Return the content of given url
@@ -46,7 +49,7 @@ class Spider:
         """
 
         try:
-            req = requests.get(toUrl, cookies = self.cookdic, timeout=100)
+            req = requests.get(toUrl, cookies=self.cookdic, timeout=100)
         except:
             return None
         if req.status_code != requests.codes.ok:
@@ -191,7 +194,7 @@ class Spider:
 
     def get_info(self, inputid):
         time_now = int(time.time())
-        inputUrl = HOME_PAGE + inputid + INFO_PAGE
+        inputUrl = constant.HOME_PAGE + inputid + constant.INFO_PAGE
         tmpContent = self.get_content(inputUrl)
         soup = BeautifulSoup(tmpContent.text, "html.parser")
 
@@ -202,11 +205,26 @@ class Spider:
         # get_weibo(inputid)
         return info_dict
 
+    def get_result(self, inputid):
+        return {'uid': inputid, 'updated_at': time.time(), 'weibo_list': self.get_weibo(inputid)}
+
     def crawl(self, inputid):
         # 'info_dict':get_info(inputid),
         # cookdic = login.getCookies([{'no':username, 'psw':password}])[0]
-
-        return {'weibo_list': self.get_weibo(inputid)}
+        find_row = self.client['soa']['weibo'].find_one({'uid': inputid})
+        if (find_row):
+            weibo_len = len(find_row['weibo_list'])
+            days = (time.time() - find_row['updated_at']) / (60 * 60 * 24)
+            if(len <= 50 or days > 14):
+                res = self.get_result(inputid)
+                self.client['soa']['weibo'].replace_one({'uid':inputid}, res)
+                return res
+            else:
+                return find_row
+        else:
+            res = self.get_result(inputid)
+            self.client['soa']['weibo'].insert_one(res)
+            return res
         # 'info_dict':get_info(inputid),
 
 
@@ -223,5 +241,6 @@ if __name__ == "__main__":
     # wd = open('./website/static/my_weibo_list.json', 'w')
     # wd.write(json.dumps(my_weibo_list))
     # wd.close()
+    print len(my_weibo_list['weibo_list'])
 
     print 'done...'
