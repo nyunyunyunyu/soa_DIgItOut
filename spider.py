@@ -29,7 +29,7 @@ def showjson(s, count):
 
 class Spider:
     def updateCookie(self):
-        cookie = "SINAGLOBAL=1235433884430.6768.1430467351374; wb_publish_vip_2243006675=1; wb_bub_hot_5894427394=1; un=soadigitout@itispxm.com; myuid=5894427394; UOR=,,www.google.com.hk; YF-Page-G0=f70469e0b5607cacf38b47457e34254f; _s_tentry=-; Apache=8905100007286.064.1463722207724; ULV=1463722207739:24:3:2:8905100007286.064.1463722207724:1463500634206; YF-V5-G0=d45b2deaf680307fa1ec077ca90627d1; login_sid_t=79f68dfea5288dec7ccfc85f90279308; YF-Ugrow-G0=169004153682ef91866609488943c77f; SUS=SID-5894427394-1463989169-GZ-rw4j8-cf39c09610a7383c46b8a8691fd7201c; SUE=es%3D0e94e7489b4e57f97e41c15066e22a8d%26ev%3Dv1%26es2%3D83e78fa0bb20b7c192e0df2abaa6b7bf%26rs0%3DP1SyU%252BCEDt9RLimVJJwOhRPT3L2OgOO%252FWEgM9n19ySrTovZQcQccZA7Dh3XH6Uu2lGh7kq9TSI6HZgITOk0l4pHGtATJ746I%252Fm6auLSH9xlbTmIhIOX21HS9EyhMJUDQ4W2oc%252FSKNGgn%252BG9NX0tFTmfkq%252FNi5BnstpiO1PoGFjM%253D%26rv%3D0; SUP=cv%3D1%26bt%3D1463989169%26et%3D1464075569%26d%3Dc909%26i%3D201c%26us%3D1%26vf%3D0%26vt%3D0%26ac%3D0%26st%3D0%26uid%3D5894427394%26name%3Dsoadigitout%2540itispxm.com%26nick%3Ddigitout%26fmp%3D%26lcp%3D; SUB=_2A256RsPhDeTxGeNG4lYV8inPwjiIHXVZNbIprDV8PUNbuNBeLU73kW9LHetDCOiyqLcYZzcHm4NBqZm87X4Zsg..; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WFSmMZEdn1kmBrdvnWgNJZF5JpX5K2hUgL.Fo-R1KBXeoM01KBt; SUHB=06ZVejbtcampjD; ALF=1495525168; SSOLoginState=1463989169"
+        cookie = "SINAGLOBAL=9680108074098.826.1461898907956; wb_publish_vip_2031727173=4; wb_bub_hot_5894427394=1; YF-Ugrow-G0=b02489d329584fca03ad6347fc915997; YF-V5-G0=2a21d421b35f7075ad5265885eabb1e4; _s_tentry=login.sina.com.cn; Apache=5034842943168.573.1463327257571; ULV=1463327257606:3:2:1:5034842943168.573.1463327257571:1462236550964; YF-Page-G0=f1bc83fe81b7ae21d6ba1fa7afc24fde; TC-Ugrow-G0=370f21725a3b0b57d0baaf8dd6f16a18; TC-Page-G0=a1e213552523eaff2a80326cc1068982; TC-V5-G0=ffc89a27ffa5c92ffdaf08972449df02; login_sid_t=1ebbc46ab3073f2bc84ca0c7e9bedfaa; myuid=5894427394; lzstat_uv=23978883723075672468|2893156; lzstat_ss=2356230116_1_1463524403_2893156; WBtopGlobal_register_version=60539f809b40ed0d; un=soaDigItOut@itispxm.com; wb_g_minivideo_5894427394=1; SUS=SID-5894427394-1464058089-JA-ahlzy-1bc95b720426ac244e36be39febef036; SUE=es%3Dbae0b379dd37327cb96bd354dd1c566b%26ev%3Dv1%26es2%3De8365541bfa8ffbddf94b13dfd484464%26rs0%3DbnyhKeWyYJ39jyzc8HCFGKysZB9%252FoJ7jioNE2uiSJV6pHxoqL319Iu0uFPYMcmEmGX0nonwkn%252BDuU8YE0d8bAshNXkB3WDa%252FN9pTh69EtfrFNCVMfxmcmnIexZTpFh4zRHnzbFHqM0qLFoH6fsyqcaZXu5r2CnYmLUfZqVA5iXs%253D%26rv%3D0; SUP=cv%3D1%26bt%3D1464058089%26et%3D1464144489%26d%3Dc909%26i%3Df036%26us%3D1%26vf%3D0%26vt%3D0%26ac%3D2%26st%3D0%26uid%3D5894427394%26name%3Dsoadigitout%2540itispxm.com%26nick%3Ddigitout%26fmp%3D%26lcp%3D; SUB=_2A256R7C5DeTxGeNG4lYV8inPwjiIHXVZNKVxrDV8PUNbvtAMLUX1kW9LHeuIVFjUji8VdFZU_pI-C0-OtVyLlg..; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WFSmMZEdn1kmBrdvnWgNJZF5JpX5KMhUgL.Fo-R1KBXeoM01KBt; SUHB=0z1QUgLGvHS8YP; ALF=1495594088; SSOLoginState=1464058089; UOR=www.aizhan.com,widget.weibo.com,www.csdn.net; wvr=6"
         self.cookdic = dict(Cookie=cookie)
 
     def __init__(self):
@@ -96,71 +96,53 @@ class Spider:
                 if 'url_struct' in weibo:
                     if weibo['url_struct'][0]['url_type'] == 36:
                         # showjson(weibo['url_struct'],0)
-                        print weibo['url_struct'][0]['short_url']
+                        # print weibo['url_struct'][0]['short_url']
                         content = self.get_content(weibo['url_struct'][0]['short_url'])
                         if content:
                             short_url_data = content.text
-                            # location.replace("http://weibo.com/p/10040484566?retcode=6102");
                             pattern = u'location.replace\("([^"]*)"\)'
-                            # print short_url_data
-                            # m = re.search(pattern, short_url_data)
-                            # if m:
-                            #     gotourl = m.group(1)
-                            #     print gotourl
                             url_data = short_url_data
-                            # print url_data
-                            # print url_data
-                            # if url_data == short_url_data:
-                            #     print 'fuck'
-                            # src="http://place.weibo.com/index.php?_p=place_page&amp;_a=poi_map_right&amp;poiid=120.62851_27.79679&amp;circle=1&amp;radius=11000"
-                            # url_data = 'src="http://place.weibo.com/index.php?_p=place_page&amp;_a=poi_map_right&amp;poiid=120.62851_27.79679&amp;'
                             # 地址数据
                             pattern = u'poiid=([^\&]*)\&amp'
                             mm = re.search(pattern, url_data)
                             if mm:
-                                print "ok"
-                                print mm.group(1)
+                                print "type 1 ok"
                                 # print mm.group(1)
+                                    # print mm.group(1)
                                 # print url_data
                                 my_weibo['location_name'] = weibo['url_struct'][0]['url_title']
-                                [lon, lat] = mm.group(1).split('_')
+                                [lon,lat] = mm.group(1).split('_')
                                 my_weibo['location_lon'] = lon
                                 my_weibo['location_lat'] = lat
                                 # print my_weibo['location']
                                 # <src="http://place.weibo.com/index.php?_p=place_page&amp;_a=poi_map_right&amp;poiid=1013247614"
                                 # poiObject.lon = 116.307620521;
                                 # poiObject.lat = 39.9841806635;
-                                # else:
-                                #     print 'checkin'
-                                #     pattern = u'http:\/\/place.weibo.cn\/poih5?act=poi&amp;do=claim_freesettle&amp;poiid='
-                                #     mmm = re.search(pattern, url_data)
-                                #     if mmm:
-                                #         print 'ok2'
-                # if 'url_struct' in weibo:
-                #     if weibo['url_struct'][0]['url_type'] == 36:
-                #         # showjson(weibo['url_struct'],0)
-                #         print weibo['url_struct'][0]['short_url']
-                #         short_url_data = get_content(weibo['url_struct'][0]['short_url'], cookdic).text
-                #         # location.replace("http://weibo.com/p/10040484566?retcode=6102");
-                #         pattern = u'location.replace\("([^"]*)"\)'
-                #         m = re.search(pattern, short_url_data)
-                #         if m:
-                #             gotourl = m.group(1)
-                #             print gotourl
-                #             url_data = get_content(gotourl, cookdic).text
-                #             print url_data
-                #             # print url_data
-                #             # if url_data == short_url_data:
-                #             #     print 'fuck'
-                #             # src="http://place.weibo.com/index.php?_p=place_page&amp;_a=poi_map_right&amp;poiid=120.62851_27.79679&amp;circle=1&amp;radius=11000"
-                #             # url_data = 'src="http://place.weibo.com/index.php?_p=place_page&amp;_a=poi_map_right&amp;poiid=120.62851_27.79679&amp;'
-                #             pattern = u'poiid'
-                #             mm = re.search(pattern, url_data)
-                #             if mm:
-                #                 print "ok"
-                #                 # print mm.group(1)
-                #             # print url_data
-                #         my_weibo['location'] = weibo['url_struct'][0]['url_title']
+                            else:
+                                # print 'checkin'
+                                # print url_data
+                                pattern = u'poiid=([^\']*)\''
+                                mmm = re.search(pattern, url_data)
+                                if mmm:
+                                    # print mmm.group(1)
+                                    placeid = mmm.group(1)
+                                    print 'type 2 ok2'
+                                    url = "http://place.weibo.com/index.php?_p=place_page&_a=poi_map_right&poiid="+placeid
+                                    # newcookiedic = login.getCookies([{'no':username, 'psw':password}])[0]
+                                    content = self.get_content(url)
+                                    if content:
+                                        # print '*'*100
+                                        # print content.text
+                                        p1 = u'poiObject.lon = ([^;]*);'
+                                        m1 = re.search(p1, content.text)
+                                        p2 = u'poiObject.lat = ([^;]*);'
+                                        m2 = re.search(p2, content.text)
+                                        if m1 and m2:
+                                            lon = m1.group(1)
+                                            lat = m2.group(1)
+                                            my_weibo['location_name'] = weibo['url_struct'][0]['url_title']
+                                            my_weibo['location_lon'] = lon
+                                            my_weibo['location_lat'] = lat
                 if 'created_at' in weibo:
                     my_weibo['created_at'] = weibo['created_at']
                 if 'thumbnail_pic' in weibo:
