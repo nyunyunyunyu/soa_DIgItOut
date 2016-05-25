@@ -193,6 +193,8 @@ class Spider:
     def crawl(self, inputid):
         # 'info_dict':get_info(inputid),
         # cookdic = login.getCookies([{'no':username, 'psw':password}])[0]
+        if constant.CACHE_ENABLE:
+            return self.get_result(inputid)
         find_row = self.client['soa']['weibo'].find_one({'uid': inputid})
         if (find_row):
             weibo_len = len(find_row['weibo_list'])

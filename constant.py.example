@@ -5,6 +5,8 @@ PASSWORD = ""
 MONGODB_HOST = ''
 MONGODB_PORT = 0
 
+CACHE_ENABLE = True
+
 HOME_PAGE = 'http://weibo.cn/'
 INFO_PAGE = '/info'
 FANS_PAGE = '/fans?page='
