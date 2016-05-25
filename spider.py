@@ -29,7 +29,7 @@ def showjson(s, count):
 
 class Spider:
     def updateCookie(self):
-        cookie = "SINAGLOBAL=9680108074098.826.1461898907956; wb_publish_vip_2031727173=4; wb_bub_hot_5894427394=1; YF-Ugrow-G0=b02489d329584fca03ad6347fc915997; YF-V5-G0=2a21d421b35f7075ad5265885eabb1e4; _s_tentry=login.sina.com.cn; Apache=5034842943168.573.1463327257571; ULV=1463327257606:3:2:1:5034842943168.573.1463327257571:1462236550964; YF-Page-G0=f1bc83fe81b7ae21d6ba1fa7afc24fde; TC-Ugrow-G0=370f21725a3b0b57d0baaf8dd6f16a18; TC-Page-G0=a1e213552523eaff2a80326cc1068982; TC-V5-G0=ffc89a27ffa5c92ffdaf08972449df02; login_sid_t=1ebbc46ab3073f2bc84ca0c7e9bedfaa; myuid=5894427394; lzstat_uv=23978883723075672468|2893156; lzstat_ss=2356230116_1_1463524403_2893156; WBtopGlobal_register_version=60539f809b40ed0d; un=soaDigItOut@itispxm.com; wb_g_minivideo_5894427394=1; SUS=SID-5894427394-1464058089-JA-ahlzy-1bc95b720426ac244e36be39febef036; SUE=es%3Dbae0b379dd37327cb96bd354dd1c566b%26ev%3Dv1%26es2%3De8365541bfa8ffbddf94b13dfd484464%26rs0%3DbnyhKeWyYJ39jyzc8HCFGKysZB9%252FoJ7jioNE2uiSJV6pHxoqL319Iu0uFPYMcmEmGX0nonwkn%252BDuU8YE0d8bAshNXkB3WDa%252FN9pTh69EtfrFNCVMfxmcmnIexZTpFh4zRHnzbFHqM0qLFoH6fsyqcaZXu5r2CnYmLUfZqVA5iXs%253D%26rv%3D0; SUP=cv%3D1%26bt%3D1464058089%26et%3D1464144489%26d%3Dc909%26i%3Df036%26us%3D1%26vf%3D0%26vt%3D0%26ac%3D2%26st%3D0%26uid%3D5894427394%26name%3Dsoadigitout%2540itispxm.com%26nick%3Ddigitout%26fmp%3D%26lcp%3D; SUB=_2A256R7C5DeTxGeNG4lYV8inPwjiIHXVZNKVxrDV8PUNbvtAMLUX1kW9LHeuIVFjUji8VdFZU_pI-C0-OtVyLlg..; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WFSmMZEdn1kmBrdvnWgNJZF5JpX5KMhUgL.Fo-R1KBXeoM01KBt; SUHB=0z1QUgLGvHS8YP; ALF=1495594088; SSOLoginState=1464058089; UOR=www.aizhan.com,widget.weibo.com,www.csdn.net; wvr=6"
+        cookie = "SINAGLOBAL=9680108074098.826.1461898907956; wb_publish_vip_2031727173=4; wb_bub_hot_5894427394=1; YF-Ugrow-G0=b02489d329584fca03ad6347fc915997; YF-V5-G0=2a21d421b35f7075ad5265885eabb1e4; _s_tentry=login.sina.com.cn; Apache=5034842943168.573.1463327257571; ULV=1463327257606:3:2:1:5034842943168.573.1463327257571:1462236550964; YF-Page-G0=f1bc83fe81b7ae21d6ba1fa7afc24fde; TC-Page-G0=a1e213552523eaff2a80326cc1068982; login_sid_t=1ebbc46ab3073f2bc84ca0c7e9bedfaa; myuid=5894427394; lzstat_uv=23978883723075672468|2893156; lzstat_ss=2356230116_1_1463524403_2893156; WBtopGlobal_register_version=60539f809b40ed0d; un=soaDigItOut@itispxm.com; wb_g_minivideo_5894427394=1; UOR=www.aizhan.com,widget.weibo.com,www.csdn.net; wvr=6; TC-V5-G0=866fef700b11606a930f0b3297300d95; TC-Ugrow-G0=0149286e34b004ccf8a0b99657f15013; SUS=SID-5894427394-1464144536-JA-v2dje-9d90c5d18da219e48b6de033092ff036; SUE=es%3D1b90e5f832a8b14962213d8e4fdef1cd%26ev%3Dv1%26es2%3D05bd46920e9795311365cbbf025eff60%26rs0%3DNB%252F7unA1w3Xevl3MbdLoTA%252FcxeqyArlqNeds1Z558V0iAeM5pB0Pr%252BEglH8nUwljeJsU6o01bwAGx3EeLBKSAgqYV0Co%252BuevMelIiReeWvlFaCJs%252FshHtBqNIoeFvtTTrSKNw9hp3pozWdcj%252BQ8AmyM4%252FgkUswNMdfgOlZz0iuw%253D%26rv%3D0; SUP=cv%3D1%26bt%3D1464144536%26et%3D1464230936%26d%3Dc909%26i%3Df036%26us%3D1%26vf%3D0%26vt%3D0%26ac%3D2%26st%3D0%26uid%3D5894427394%26name%3Dsoadigitout%2540itispxm.com%26nick%3Ddigitout%26fmp%3D%26lcp%3D; SUB=_2A256QWLIDeTxGeNG4lYV8inPwjiIHXVZN9MArDV8PUNbvtAMLRnwkW9LHeuRkLZPqDUFFXl4so1H_mErQPk5Ug..; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WFSmMZEdn1kmBrdvnWgNJZF5JpX5KMhUgL.Fo-R1KBXeoM01KB2dJLoI7y.IgUDUsvfU5tt; SUHB=0wnlt88Es50xui; ALF=1495680535; SSOLoginState=1464144536"
         self.cookdic = dict(Cookie=cookie)
 
     def __init__(self):
@@ -81,9 +81,11 @@ class Spider:
             # print s
             # weibo_list = [k['mblog'] for k in s['cards'][0]['card_group']]
             weibo_list = []
+
             for k in s['cards'][0]['card_group']:
                 if 'mblog' in k:
                     weibo_list.append(k['mblog'])
+            print 'len(weibo_list)', len(weibo_list)
             for weibo in weibo_list:
                 my_weibo = {}
                 # showjson(weibo, 0)
@@ -193,7 +195,7 @@ class Spider:
     def crawl(self, inputid):
         # 'info_dict':get_info(inputid),
         # cookdic = login.getCookies([{'no':username, 'psw':password}])[0]
-        if constant.CACHE_ENABLE:
+        if not constant.CACHE_ENABLE:
             return self.get_result(inputid)
         find_row = self.client['soa']['weibo'].find_one({'uid': inputid})
         if (find_row):
