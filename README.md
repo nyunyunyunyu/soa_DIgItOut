@@ -22,9 +22,11 @@ spider(inputid)
 				'location_lon':'120.62851',
 				'location_lat':'27.79679',
 				'created_at':'04-29 17:25',
-				'thumbnail_pic': url1,
-				'bmiddle_pic': url2,
-				'original_pic': url3
+				'pics_list':[
+					'thumbnail_pic': url1,
+					'bmiddle_pic': url2,
+					'original_pic': url3
+				]
 			}
 		]
 	}

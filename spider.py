@@ -29,7 +29,7 @@ def showjson(s, count):
 
 class Spider:
     def updateCookie(self):
-        cookie = "SINAGLOBAL=9680108074098.826.1461898907956; wb_publish_vip_2031727173=4; wb_bub_hot_5894427394=1; YF-Ugrow-G0=b02489d329584fca03ad6347fc915997; YF-V5-G0=2a21d421b35f7075ad5265885eabb1e4; _s_tentry=login.sina.com.cn; Apache=5034842943168.573.1463327257571; ULV=1463327257606:3:2:1:5034842943168.573.1463327257571:1462236550964; YF-Page-G0=f1bc83fe81b7ae21d6ba1fa7afc24fde; TC-Page-G0=a1e213552523eaff2a80326cc1068982; login_sid_t=1ebbc46ab3073f2bc84ca0c7e9bedfaa; myuid=5894427394; lzstat_uv=23978883723075672468|2893156; lzstat_ss=2356230116_1_1463524403_2893156; WBtopGlobal_register_version=60539f809b40ed0d; un=soaDigItOut@itispxm.com; wb_g_minivideo_5894427394=1; UOR=www.aizhan.com,widget.weibo.com,www.csdn.net; wvr=6; TC-V5-G0=866fef700b11606a930f0b3297300d95; TC-Ugrow-G0=0149286e34b004ccf8a0b99657f15013; SUS=SID-5894427394-1464144536-JA-v2dje-9d90c5d18da219e48b6de033092ff036; SUE=es%3D1b90e5f832a8b14962213d8e4fdef1cd%26ev%3Dv1%26es2%3D05bd46920e9795311365cbbf025eff60%26rs0%3DNB%252F7unA1w3Xevl3MbdLoTA%252FcxeqyArlqNeds1Z558V0iAeM5pB0Pr%252BEglH8nUwljeJsU6o01bwAGx3EeLBKSAgqYV0Co%252BuevMelIiReeWvlFaCJs%252FshHtBqNIoeFvtTTrSKNw9hp3pozWdcj%252BQ8AmyM4%252FgkUswNMdfgOlZz0iuw%253D%26rv%3D0; SUP=cv%3D1%26bt%3D1464144536%26et%3D1464230936%26d%3Dc909%26i%3Df036%26us%3D1%26vf%3D0%26vt%3D0%26ac%3D2%26st%3D0%26uid%3D5894427394%26name%3Dsoadigitout%2540itispxm.com%26nick%3Ddigitout%26fmp%3D%26lcp%3D; SUB=_2A256QWLIDeTxGeNG4lYV8inPwjiIHXVZN9MArDV8PUNbvtAMLRnwkW9LHeuRkLZPqDUFFXl4so1H_mErQPk5Ug..; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WFSmMZEdn1kmBrdvnWgNJZF5JpX5KMhUgL.Fo-R1KBXeoM01KB2dJLoI7y.IgUDUsvfU5tt; SUHB=0wnlt88Es50xui; ALF=1495680535; SSOLoginState=1464144536"
+        cookie = "SINAGLOBAL=9680108074098.826.1461898907956; wb_publish_vip_2031727173=4; wb_bub_hot_5894427394=1; YF-Ugrow-G0=b02489d329584fca03ad6347fc915997; YF-V5-G0=2a21d421b35f7075ad5265885eabb1e4; _s_tentry=login.sina.com.cn; Apache=5034842943168.573.1463327257571; ULV=1463327257606:3:2:1:5034842943168.573.1463327257571:1462236550964; YF-Page-G0=f1bc83fe81b7ae21d6ba1fa7afc24fde; TC-Page-G0=a1e213552523eaff2a80326cc1068982; login_sid_t=1ebbc46ab3073f2bc84ca0c7e9bedfaa; myuid=5894427394; lzstat_uv=23978883723075672468|2893156; lzstat_ss=2356230116_1_1463524403_2893156; wb_g_minivideo_5894427394=1; wvr=6; TC-V5-G0=866fef700b11606a930f0b3297300d95; TC-Ugrow-G0=0149286e34b004ccf8a0b99657f15013; UOR=www.aizhan.com,widget.weibo.com,gre.tiandaoedu.com; WBStore=8ca40a3ef06ad7b2|undefined; WBtopGlobal_register_version=60539f809b40ed0d; SUS=SID-5894427394-1464508713-GZ-d2ty5-577721388825c5d13fd4092d245420e6; SUE=es%3D5255a9bf667cbe44420de378f7ffc539%26ev%3Dv1%26es2%3D2249dabf2dbfcbfe546e77e64852357d%26rs0%3Dlndjx7LIB1WEd88by7pu68e%252F0zx48cVBhHsaOQuKYCH7meFsxCcsCerWCNvY%252FpSPEhA6VtTMBC%252BydQbm8OeuVjZ1SfWa57G0MeLZnH%252FEowFwq%252BfcbVZtblF2QUCQEKpthEjgmOi8MEktkAA4sA3g%252FErNerDUl3GyoQaf78%252BPdU8%253D%26rv%3D0; SUP=cv%3D1%26bt%3D1464508713%26et%3D1464595113%26d%3Dc909%26i%3D20e6%26us%3D1%26vf%3D0%26vt%3D0%26ac%3D2%26st%3D0%26uid%3D5894427394%26name%3Dsoadigitout%2540itispxm.com%26nick%3Ddigitout%26fmp%3D%26lcp%3D; SUB=_2A256TtF5DeTxGeNG4lYV8inPwjiIHXVZOkWxrDV8PUNbuNBeLUfzkW9LHeuO44aUtMi19nM3in2D4znQ_iPlFw..; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WFSmMZEdn1kmBrdvnWgNJZF5JpX5K2hUgL.Fo-R1KBXeoM01KB2dJLoI7y.IgUDUsvfU5tt; SUHB=0A0ZpEZot003ds; ALF=1465113513; SSOLoginState=1464508713; un=soaDigItOut@itispxm.com"
         self.cookdic = dict(Cookie=cookie)
 
     def __init__(self):
@@ -73,9 +73,7 @@ class Spider:
         for i in xrange(1, maxPage + 1):
             print "Page %d" % i
             s = json.loads(self.get_content(inputUrl + str(i)).text)
-            # showjson(s['cards'][0]['card_group'][0],0)
-            # showjson(s['cards'][0]['card_group'][0]['mblog']['url_struct'][0]['url_title'],0)
-            # showjson(s['cards'][0]['card_group'][0]['mblog']['url_struct'][0],0)
+
             if 'card_group' not in s['cards'][0]:
                 continue
             # print s
@@ -90,6 +88,7 @@ class Spider:
                 my_weibo = {}
                 # showjson(weibo, 0)
                 # text
+
                 if 'text' in weibo:
                     my_weibo['text'] = weibo['text']
                 # mobile phone
@@ -147,12 +146,20 @@ class Spider:
                                             my_weibo['location_lat'] = lat
                 if 'created_at' in weibo:
                     my_weibo['created_at'] = weibo['created_at']
-                if 'thumbnail_pic' in weibo:
-                    my_weibo['thumbnail_pic'] = weibo['thumbnail_pic']
-                if 'bmiddle_pic' in weibo:
-                    my_weibo['bmiddle_pic'] = weibo['bmiddle_pic']
-                if 'original_pic' in weibo:
-                    my_weibo['original_pic'] = weibo['original_pic']
+                thumbnail_url = 'http://ww1.sinaimg.cn/thumbnail/'
+                bmiddle_url = 'http://ww1.sinaimg.cn/bmiddle/'
+                original_url = 'http://ww1.sinaimg.cn/large/'
+                if 'pics' in weibo:
+                    pics_list = []
+                    for pic in weibo['pics']:
+                        pics_list.append({'thumbnail_pic':thumbnail_url+pic['pid'], 'bmiddle_pic':bmiddle_url+pic['pid'], 'original_pic':original_url+pic['pid']})
+                    my_weibo['pics'] = pics_list
+                # if 'thumbnail_pic' in weibo:
+                #     my_weibo['thumbnail_pic'] = weibo['thumbnail_pic']
+                # if 'bmiddle_pic' in weibo:
+                #     my_weibo['bmiddle_pic'] = weibo['bmiddle_pic']
+                # if 'original_pic' in weibo:
+                #     my_weibo['original_pic'] = weibo['original_pic']
                 my_weibo_list.append(my_weibo)
 
         showjson(my_weibo_list, 0)
