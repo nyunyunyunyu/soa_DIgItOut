@@ -74,9 +74,7 @@ class Spider:
         for i in xrange(1, maxPage + 1):
             print "Page %d" % i
             s = json.loads(self.get_content(inputUrl + str(i)).text)
-            # showjson(s['cards'][0]['card_group'][0],0)
-            # showjson(s['cards'][0]['card_group'][0]['mblog']['url_struct'][0]['url_title'],0)
-            # showjson(s['cards'][0]['card_group'][0]['mblog']['url_struct'][0],0)
+
             if 'card_group' not in s['cards'][0]:
                 continue
             # print s
@@ -91,6 +89,7 @@ class Spider:
                 my_weibo = {}
                 # showjson(weibo, 0)
                 # text
+
                 if 'text' in weibo:
                     my_weibo['text'] = weibo['text']
                 # mobile phone
@@ -148,12 +147,20 @@ class Spider:
                                             my_weibo['location_lat'] = lat
                 if 'created_at' in weibo:
                     my_weibo['created_at'] = weibo['created_at']
-                if 'thumbnail_pic' in weibo:
-                    my_weibo['thumbnail_pic'] = weibo['thumbnail_pic']
-                if 'bmiddle_pic' in weibo:
-                    my_weibo['bmiddle_pic'] = weibo['bmiddle_pic']
-                if 'original_pic' in weibo:
-                    my_weibo['original_pic'] = weibo['original_pic']
+                thumbnail_url = 'http://ww1.sinaimg.cn/thumbnail/'
+                bmiddle_url = 'http://ww1.sinaimg.cn/bmiddle/'
+                original_url = 'http://ww1.sinaimg.cn/large/'
+                if 'pics' in weibo:
+                    pics_list = []
+                    for pic in weibo['pics']:
+                        pics_list.append({'thumbnail_pic':thumbnail_url+pic['pid'], 'bmiddle_pic':bmiddle_url+pic['pid'], 'original_pic':original_url+pic['pid']})
+                    my_weibo['pics'] = pics_list
+                # if 'thumbnail_pic' in weibo:
+                #     my_weibo['thumbnail_pic'] = weibo['thumbnail_pic']
+                # if 'bmiddle_pic' in weibo:
+                #     my_weibo['bmiddle_pic'] = weibo['bmiddle_pic']
+                # if 'original_pic' in weibo:
+                #     my_weibo['original_pic'] = weibo['original_pic']
                 my_weibo_list.append(my_weibo)
 
         showjson(my_weibo_list, 0)
@@ -222,7 +229,7 @@ if __name__ == "__main__":
     print "----------"
     my_spider = Spider()
     my_weibo_list = my_spider.crawl(sys.argv[1])
-    image_detect.get_grouping_result(my_weibo_list)
+    # image_detect.get_grouping_result(my_weibo_list)
     # showjson(my_weibo_list,0)
 
     # wd = open('./website/static/my_weibo_list.json', 'w')

@@ -36,7 +36,7 @@ def download_all_weibo_image(uid, image_url_list):
     if not os.path.exists(image_cache_path):
         os.mkdir(image_cache_path)
     for url in image_url_list:
-        file_name = os.path.join(image_cache_path, get_filename(url))
+        file_name = os.path.join(image_cache_path, get_filename(url)).encode('utf-8')
         if os.path.exists(file_name):
             if os.path.isdir(file_name):
                 raise Exception('Exist directory with the same name')
@@ -52,10 +52,9 @@ def face_image_detect(uid, image_url_list):
     face_image_url = {}
     api = API(constant.FACEPP_API_KEY, constant.FACEPP_API_SECRET)
     for url in image_url_list:
-        file_name = os.path.join(image_cache_path, get_filename(url)).decode('utf-8')
+        # print url
+        file_name = os.path.join(image_cache_path, get_filename(url)).encode('utf-8')
         img = File(file_name)
-        import pdb
-        pdb.set_trace()
         rst = api.detection.detect(img=img)
         if len(rst['face']):
             face_image_url[url] = rst
@@ -70,7 +69,7 @@ def face_grouping(uid, face_image_url):
             res = api.faceset.add_face(faceset_id=faceset_id, face_id = face['face_id'])
     session_id = api.grouping.grouping(faceset_id = faceset_id)
     session_id = session_id['session_id']
-    rst = api.wait_async(rst['session_id'])
+    rst = api.wait_async(session_id)
     api.faceset.delete(faceset_id=faceset_id)
     if not rst.has_key('result'):
         raise Exception('API return error')
