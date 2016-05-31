@@ -212,7 +212,7 @@ class Spider:
         # 'info_dict':get_info(inputid),
         # cookdic = login.getCookies([{'no':username, 'psw':password}])[0]
         if not constant.CACHE_ENABLE:
-            return self.get_result(inputid)
+            return True, self.get_result(inputid)
         find_row = self.client['soa']['weibo'].find_one({'uid': inputid})
         if (find_row):
             weibo_len = len(find_row['weibo_list'])
@@ -220,15 +220,13 @@ class Spider:
             if(len <= 50 or days > 14):
                 res = self.get_result(inputid)
                 self.client['soa']['weibo'].replace_one({'uid':inputid}, res)
-                return res
+                return True, res
             else:
-                return find_row
+                return False, find_row
         else:
             res = self.get_result(inputid)
             self.client['soa']['weibo'].insert_one(res)
-            return res
-
-
+            return True, res
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
@@ -237,8 +235,8 @@ if __name__ == "__main__":
     print "spider test begin ~~"
     print "----------"
     my_spider = Spider()
-    my_weibo_list = my_spider.crawl(sys.argv[1])
-    image_detect.get_grouping_result(my_weibo_list)
+    latest, my_weibo_list = my_spider.crawl(sys.argv[1])
+    image_detect.get_grouping_result(my_weibo_list, latest)
     # showjson(my_weibo_list,0)
 
     # wd = open('./website/static/my_weibo_list.json', 'w')

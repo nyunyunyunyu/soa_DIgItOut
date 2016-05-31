@@ -4,11 +4,13 @@ Dig It Out Project
 MongoDB
 PyMongo
 ## interface of the spider:
-spider(inputid)
+crawl(inputid)
 ###input:
 	userid
 ###output:
-	output {
+	output (
+	latest,
+	{
 		'info_dict':{
 			'name':'AnthonyWang',
 			'home':'浙江 温州',
@@ -30,8 +32,11 @@ spider(inputid)
 			}
 		]
 	}
+	)
 
 一些注意事项：
+
+latest表示数据是否是最新的（即是否返回了缓存数据）
 
 location中对check-in的地址信息还没正确考虑，发微博自带的地址可以找到经纬度。（不过需要自己找cookie才行）
 
@@ -44,8 +49,8 @@ cookie每次需要更新
 直接运行spider.py可以查看得到的微博结果
 
 ## interface of the image_detect:
-get_grouping_result(weibo)
-weibo是spider的结果
+get_grouping_result(weibo, need_update)
+weibo是spider的结果, need_update是crawl返回的latest，表示是否要重新进行聚类
 ### output:
 (group, face_info)
 group是一个list，例如

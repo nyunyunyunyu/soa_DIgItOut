@@ -7,6 +7,7 @@ import time
 import random
 import requests
 import os
+import pymongo
 
 def print_result(hint, result):
     def encode(obj):
@@ -76,7 +77,7 @@ def face_grouping(uid, face_image_url):
         raise Exception('API return error')
     return rst['result']
 
-def get_grouping_result(weibo):
+def get_grouping_result_online(weibo):
     image_url_list = weibo_image_extract(weibo)
     uid = weibo['uid']
     download_all_weibo_image(uid, image_url_list)
@@ -95,6 +96,26 @@ def get_grouping_result(weibo):
             face_id = face_info['face_id']
             face_info_dict[face_id] = face_info
     return ans, face_info_dict
+
+def get_grouping_result(weibo, need_update):
+    client = pymongo.MongoClient(constant.MONGODB_HOST, constant.MONGODB_PORT)
+    if (not 'soa' in client.database_names() or not 'image_grouping' in client['soa'].collection_names()):
+        client['soa']['image_grouping'].create_index([('uid', pymongo.ASCENDING)], unique=True)
+    if not constant.CACHE_ENABLE:
+        return get_grouping_result_online(weibo)
+    uid = weibo['uid']
+    find_row = client['soa']['image_grouping'].find_one({'uid': uid})
+    if (find_row):
+        if(need_update):
+            res = get_grouping_result_online(weibo)
+            client['soa']['image_grouping'].replace_one({'uid':uid}, {'uid':uid, 'grouping_info':res})
+            return res
+        else:
+            return find_row['grouping_info']
+    else:
+        res = get_grouping_result_online(weibo)
+        client['soa']['image_grouping'].insert_one({'uid':uid, 'grouping_info':res})
+        return res
 
 if __name__ == "__main__":
     pass
