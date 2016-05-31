@@ -27,8 +27,9 @@ def get_filename(url):
 def weibo_image_extract(weibo):
     image_url_list = []
     for weibo in weibo['weibo_list']:
-        if weibo.has_key('bmiddle_pic'):
-            image_url_list.append(weibo['bmiddle_pic'])
+        if weibo.has_key('pics'):
+            for img in weibo['pics']:
+                image_url_list.append(img['bmiddle_pic'])
     return image_url_list
 
 def download_all_weibo_image(uid, image_url_list):
@@ -89,11 +90,9 @@ def get_grouping_result(weibo):
         ans.append(tmp)
     face_info_dict = {}
     for url in face_image_url:
-        image_cache_path = os.path.join(constant.IMAGE_CACHE_DIR, uid)
-        file_name = os.path.join(image_cache_path, get_filename(url))
         for face_info in face_image_url[url]['face']:
             face_info['url'] = url
-            face_id = face['face_id']
+            face_id = face_info['face_id']
             face_info_dict[face_id] = face_info
     return ans, face_info_dict
 

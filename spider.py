@@ -39,6 +39,9 @@ class Spider:
         if (not 'soa' in self.client.database_names() or not 'weibo' in self.client['soa'].collection_names()):
             self.client['soa']['weibo'].create_index([('uid', pymongo.ASCENDING)], unique=True)
 
+    def clear_cache(self):
+        self.client['soa']['weibo'].remove()
+
     def get_content(self, toUrl):
         """ Return the content of given url
             Args:
@@ -50,7 +53,7 @@ class Spider:
         """
 
         try:
-            req = requests.get(toUrl, cookies=self.cookdic, timeout=100)
+            req = requests.get(toUrl, cookies=self.cookdic, timeout=1)
         except:
             return None
         if req.status_code != requests.codes.ok:
@@ -73,7 +76,11 @@ class Spider:
         my_weibo_list = []
         for i in xrange(1, maxPage + 1):
             print "Page %d" % i
-            s = json.loads(self.get_content(inputUrl + str(i)).text)
+            tmp = self.get_content(inputUrl + str(i))
+            if tmp is None:
+                continue
+            print tmp.text
+            s = json.loads(tmp.text)
 
             if 'card_group' not in s['cards'][0]:
                 continue
@@ -221,6 +228,8 @@ class Spider:
             self.client['soa']['weibo'].insert_one(res)
             return res
 
+
+
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         print "Usage: python spider.py <uid>"
@@ -229,7 +238,7 @@ if __name__ == "__main__":
     print "----------"
     my_spider = Spider()
     my_weibo_list = my_spider.crawl(sys.argv[1])
-    # image_detect.get_grouping_result(my_weibo_list)
+    image_detect.get_grouping_result(my_weibo_list)
     # showjson(my_weibo_list,0)
 
     # wd = open('./website/static/my_weibo_list.json', 'w')
