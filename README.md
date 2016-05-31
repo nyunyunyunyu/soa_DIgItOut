@@ -41,3 +41,13 @@ cookie每次需要更新
 
 直接运行spider.py可以查看得到的微博结果
 
+## interface of the image_detect:
+get_grouping_result(weibo)
+weibo是spider的结果
+### output:
+(group, face_info)
+group是一个list，例如
+\[\[a1,a2\],\[a3,a4\]\]
+\[a1,a2\]是同一个人的脸的编号
+脸的相关信息可以在face_info中找到
+http://www.faceplusplus.com.cn/detection_detect/

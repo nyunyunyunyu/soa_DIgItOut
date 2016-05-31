@@ -5,6 +5,11 @@ PASSWORD = ""
 MONGODB_HOST = ''
 MONGODB_PORT = 0
 
+FACEPP_API_KEY = ''
+FACEPP_API_SECRET = ''
+
+IMAGE_CACHE_DIR = 'image'
+
 CACHE_ENABLE = True
 
 HOME_PAGE = 'http://weibo.cn/'

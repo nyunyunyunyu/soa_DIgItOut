@@ -11,6 +11,7 @@ import json
 import sys
 import login
 import pymongo
+import image_detect
 
 
 def showjson(s, count):
@@ -29,7 +30,7 @@ def showjson(s, count):
 
 class Spider:
     def updateCookie(self):
-        cookie = "SINAGLOBAL=9680108074098.826.1461898907956; wb_publish_vip_2031727173=4; wb_bub_hot_5894427394=1; YF-Ugrow-G0=b02489d329584fca03ad6347fc915997; YF-V5-G0=2a21d421b35f7075ad5265885eabb1e4; _s_tentry=login.sina.com.cn; Apache=5034842943168.573.1463327257571; ULV=1463327257606:3:2:1:5034842943168.573.1463327257571:1462236550964; YF-Page-G0=f1bc83fe81b7ae21d6ba1fa7afc24fde; TC-Page-G0=a1e213552523eaff2a80326cc1068982; login_sid_t=1ebbc46ab3073f2bc84ca0c7e9bedfaa; myuid=5894427394; lzstat_uv=23978883723075672468|2893156; lzstat_ss=2356230116_1_1463524403_2893156; WBtopGlobal_register_version=60539f809b40ed0d; un=soaDigItOut@itispxm.com; wb_g_minivideo_5894427394=1; UOR=www.aizhan.com,widget.weibo.com,www.csdn.net; wvr=6; TC-V5-G0=866fef700b11606a930f0b3297300d95; TC-Ugrow-G0=0149286e34b004ccf8a0b99657f15013; SUS=SID-5894427394-1464144536-JA-v2dje-9d90c5d18da219e48b6de033092ff036; SUE=es%3D1b90e5f832a8b14962213d8e4fdef1cd%26ev%3Dv1%26es2%3D05bd46920e9795311365cbbf025eff60%26rs0%3DNB%252F7unA1w3Xevl3MbdLoTA%252FcxeqyArlqNeds1Z558V0iAeM5pB0Pr%252BEglH8nUwljeJsU6o01bwAGx3EeLBKSAgqYV0Co%252BuevMelIiReeWvlFaCJs%252FshHtBqNIoeFvtTTrSKNw9hp3pozWdcj%252BQ8AmyM4%252FgkUswNMdfgOlZz0iuw%253D%26rv%3D0; SUP=cv%3D1%26bt%3D1464144536%26et%3D1464230936%26d%3Dc909%26i%3Df036%26us%3D1%26vf%3D0%26vt%3D0%26ac%3D2%26st%3D0%26uid%3D5894427394%26name%3Dsoadigitout%2540itispxm.com%26nick%3Ddigitout%26fmp%3D%26lcp%3D; SUB=_2A256QWLIDeTxGeNG4lYV8inPwjiIHXVZN9MArDV8PUNbvtAMLRnwkW9LHeuRkLZPqDUFFXl4so1H_mErQPk5Ug..; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WFSmMZEdn1kmBrdvnWgNJZF5JpX5KMhUgL.Fo-R1KBXeoM01KB2dJLoI7y.IgUDUsvfU5tt; SUHB=0wnlt88Es50xui; ALF=1495680535; SSOLoginState=1464144536"
+        cookie = "SINAGLOBAL=1235433884430.6768.1430467351374; wb_publish_vip_2243006675=1; wb_bub_hot_5894427394=1; YF-Page-G0=f70469e0b5607cacf38b47457e34254f; _s_tentry=-; Apache=8905100007286.064.1463722207724; ULV=1463722207739:24:3:2:8905100007286.064.1463722207724:1463500634206; YF-V5-G0=d45b2deaf680307fa1ec077ca90627d1; login_sid_t=79f68dfea5288dec7ccfc85f90279308; YF-Ugrow-G0=169004153682ef91866609488943c77f; WBStore=8ca40a3ef06ad7b2|undefined; WBtopGlobal_register_version=f81ab92b992b2688; un=soadigitout@itispxm.com; myuid=5894427394; UOR=,,login.sina.com.cn; SUS=SID-5894427394-1464667177-GZ-sqp28-ffc75c2bfc64a57aad9d045a74f6201c; SUE=es%3D00d6679771275c2e057bc0da1c13564e%26ev%3Dv1%26es2%3Dcbf7a97147067ee71f306224bb6ce004%26rs0%3DL70x13AZCaJVMXovpxuHvvlrpGEtQlesaaWFZDyNIUlYTGJa65LNJbN3twnw4H76k7RDYQAAUEFnFvNMoGjoEIJZaPiLKZ97tZMGs92OpiH3HrpV6NSc3ENRMqWuDScTgN8OQQeAt1qkM8AjQmNm%252BYU4HzHBYH9L%252B8NwFuWV%252FNs%253D%26rv%3D0; SUP=cv%3D1%26bt%3D1464667177%26et%3D1464753577%26d%3Dc909%26i%3D201c%26us%3D1%26vf%3D0%26vt%3D0%26ac%3D0%26st%3D0%26uid%3D5894427394%26name%3Dsoadigitout%2540itispxm.com%26nick%3Ddigitout%26fmp%3D%26lcp%3D; SUB=_2A256SXx5DeTxGeNG4lYV8inPwjiIHXVZP-qxrDV8PUNbuNBeLXPkkW9LHetmTf4qSt43xZywDnS8rVNl5qENYA..; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WFSmMZEdn1kmBrdvnWgNJZF5JpX5K2hUgL.Fo-R1KBXeoM01KB2dJLoI7y.IgUDUsvfU5tt; SUHB=0YhB9HZhcgnYO6; ALF=1496203176; SSOLoginState=1464667177"
         self.cookdic = dict(Cookie=cookie)
 
     def __init__(self):
@@ -190,7 +191,8 @@ class Spider:
         return info_dict
 
     def get_result(self, inputid):
-        return {'uid': inputid, 'updated_at': time.time(), 'weibo_list': self.get_weibo(inputid)}
+        return {'uid': inputid, 'updated_at': time.time(), 'weibo_list': self.get_weibo(inputid),
+                        'info_dict': self.get_info(inputid),}
 
     def crawl(self, inputid):
         # 'info_dict':get_info(inputid),
@@ -211,8 +213,6 @@ class Spider:
             res = self.get_result(inputid)
             self.client['soa']['weibo'].insert_one(res)
             return res
-        # 'info_dict':get_info(inputid),
-
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
@@ -222,6 +222,7 @@ if __name__ == "__main__":
     print "----------"
     my_spider = Spider()
     my_weibo_list = my_spider.crawl(sys.argv[1])
+    image_detect.get_grouping_result(my_weibo_list)
     # showjson(my_weibo_list,0)
 
     # wd = open('./website/static/my_weibo_list.json', 'w')
