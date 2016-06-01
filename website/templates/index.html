@@ -8,17 +8,69 @@
     </style>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=akf1Q4p6UlmyZddPl1vhZKBdKm5Cldls"></script>
     <script type="text/javascript" src="http://api.map.baidu.com/library/CurveLine/1.5/src/CurveLine.min.js"></script>
+    <link href="/static/flat-ui-dist/css/all.css" rel="stylesheet">
+    <link href="/static/flat-ui-dist/css/style.css" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
 
+    <div id="main-wrapper">
+    <div id="wrapper">
+    <article id="main">
+        <section class="promo-section">
+            <div class="holder">
+                <h1>Dig It Out<dt>1.0.0</dt></h1>
+                <div class="input-group" style="width:60%;text-align:center;margin:0 auto">
+                    <input type="text" class="form-control" placeholder="please input a Weibo name(id)" id="search-query-3">
+                    <span class="input-group-btn">
+                    <button id="wordcloud_text" type="submit" class="btn"><span class="fui-search"></span></button>
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <a id="all-elements" class="zoomify" target="_blank" href="/static/images/DigitoutPoster.png">
+            <span class="elem-section">
+                <span class="holder">
+                    <span class="frame">
+                        <h2>Dig It Out, a Useful Tool</h2>
+                        <p>Just provide us a Weibo account name and CLICK the button, we will display information of it as much as possible. The information could be really FUN, because it's analysised by many web servers. Sounds good? Have a try!!</p>
+                    </span>
+                </span>
+                <span class="elements-nav">
+                    <img src="/static/images/DigitoutPoster.png" alt="Basic Elements" width="552" height="408">
+                    <img src="/static/images//eye-icon.png" class="icon">
+                </span>
+                <div class="buttonholder">
+                    <span class="fakeButton">View All Elements (2 Mb)</span>
+                </div>
+            </span>
+        </a>
+
+
+    </article>
+    </div>
+    </div>
+
+
+
+
     <div class="input-group" style="width:50%;text-align:center;margin:0 auto">
-        <input type="text" class="form-control" placeholder="Input Text" id="search-query-3">
+        <input type="text" class="form-control" placeholder="please input a Weibo name(id)" id="search-query-3">
         <span class="input-group-btn">
-        <button id="wordcloud_text" type="submit" class="btn"><span class="fui-star-2"></span></button>
+        <button id="wordcloud_text" type="submit" class="btn"><span class="fui-search"></span></button>
         </span>
     </div>
-    
+    <br/>
+    <div id="slider" style="width:50%;text-align:center;margin:0 auto" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false">
+        <div class="ui-slider-segment"></div>
+        <div class="ui-slider-segment"></div>
+        <div class="ui-slider-segment"></div>
+        <div class="ui-slider-range ui-widget-header ui-slider-range-min" style="width: 25%;"></div>
+        <a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: 25%;"></a>
+    </div>
+
+
     <br/>
 
     <div class="tagsinput-primary" style="width:500px;height:200px;text-align:center;margin:0 auto">
@@ -31,17 +83,18 @@
     <div id="time-chart" style="width:1200px;height:600px;text-align:center;margin:0 auto"></div>
 
     <br/>
-    
+
     <div id="week-day-chart" style="width:1000px;height:500px;text-align:center;margin:0 auto">
         <div id="week-chart" style="float:left;height:500px;width:500px">
             <!-- week-chart -->
         </div>
         <div id="day-chart" style="float:left;height:500px;width:500px">
             <!-- day-chart -->
-        </div>
-        <div style="clear:both"></div><!--这个层很有用，必须要，否则可能不兼容。--> 
+        </div>/
+        <div style="clear:both"></div>
+        <!--这个层很有用，必须要，否则可能不兼容。-->
     </div>
-    
+
     <br />
 
     <div id="trace-map" style="width:1200px;height:600px;text-align:center;margin:0 auto"></div>
@@ -49,7 +102,9 @@
     <br/>
     <br/>
 
-    <script type="text/javascript">        
+
+
+    <script type="text/javascript">
         $('#wordcloud_text').click(function() {
             var wordcloud_text = $("#search-query-3").val();
             var d = {data: JSON.stringify({"text": wordcloud_text})};
@@ -58,7 +113,7 @@
             var dataByDay;
             $.ajax("/api/wordcloud", {
                 type: 'POST',
-                data: d, 
+                data: d,
                 dataType: 'json',
                 success: function(dat, sta){
                     console.log(dat['ans']);
@@ -345,9 +400,9 @@
                     dayChart.setOption(dayOption);
                 }
             });
-            
+
         });
-        
+
         // 百度地图API功能
         var map = new BMap.Map("trace-map");
         map.centerAndZoom(new BMap.Point(116.404, 39.915), 6);

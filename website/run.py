@@ -8,7 +8,7 @@ from flask.ext.bootstrap import Bootstrap
 import requests
 import json
 import re
-import chardet
+#import chardet
 import time
 import datetime
 

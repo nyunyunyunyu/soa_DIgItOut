@@ -99,6 +99,7 @@ button::-moz-focus-inner {
 @media screen and (max-width: 1108px) {
 h2.article-title a { font-size:32px !important; font-family: 'Varela Round', 'Gotham Rounded', 'Rounded', 'Helvetica', Arial, sans-serif;}
 .shop-container li a strong { font-size:18px !important; }
+.posts-container li a strong { font-size:18px !important; }
 .buy-sell-ads-wrapper img { float:none;}
 .newsletter-wrapper .subscribe { display:none !important;} 
 .newsletter-wrapper .go { display:inline !important;}
@@ -482,9 +483,11 @@ width: 16px;
 height: 16px;
 background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiI+PHBhdGggZmlsbD0iI0RENEIzOCIgZD0iTTUuMSA3LjN2MS43aDIuOWMtLjEuNy0uOSAyLjItMi45IDIuMi0xLjcgMC0zLjItMS40LTMuMi0zLjIgMC0xLjggMS40LTMuMiAzLjItMy4yIDEgMCAxLjcuNCAyIC44bDEuNC0xLjNjLS45LS44LTItMS4zLTMuNC0xLjMtMi44LS4xLTUuMSAyLjItNS4xIDVzMi4zIDUuMSA1LjEgNS4xYzIuOSAwIDQuOS0yLjEgNC45LTUgMC0uMyAwLS42LS4xLS44aC00Ljh6TTE2IDcuM2gtMS41di0xLjVoLTEuNHYxLjVoLTEuNXYxLjRoMS41djEuNWgxLjR2LTEuNWgxLjV6Ii8+PC9zdmc+);
 }
+
 a.googleplus:hover .icn_googleplus:before {
 background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTUuMSA3LjN2MS43aDIuOWMtLjEuNy0uOSAyLjItMi45IDIuMi0xLjcgMC0zLjItMS40LTMuMi0zLjIgMC0xLjggMS40LTMuMiAzLjItMy4yIDEgMCAxLjcuNCAyIC44bDEuNC0xLjNjLS45LS44LTItMS4zLTMuNC0xLjMtMi44LS4xLTUuMSAyLjItNS4xIDVzMi4zIDUuMSA1LjEgNS4xYzIuOSAwIDQuOS0yLjEgNC45LTUgMC0uMyAwLS42LS4xLS44aC00Ljh6TTE2IDcuM2gtMS41di0xLjVoLTEuNHYxLjVoLTEuNXYxLjRoMS41djEuNWgxLjR2LTEuNWgxLjV6Ii8+PC9zdmc+);
 }
+
 .icn_facebook:before {
 content: "\e006";
 }
@@ -733,10 +736,11 @@ text-decoration: underline;
 
 #adsense-p {
 /*margin:-5px 0 10px 0 ;*/
-padding: 0 0 0 130px;
+padding: 0 0 10px 130px;
 line-height: 23px;
 text-align: center;
 }
+
 
 #adsense-p a {
 color:#888888;
@@ -747,6 +751,7 @@ font-size: 11px;
 #adsense-p a:hover {
 color:#4c4c4c;
 }
+
 
 #adsense-p-2 {
 /*margin:-5px 0 10px 0 ;*/
@@ -2166,6 +2171,66 @@ margin-left:33.89%;
 .shop-container li a:hover strong {
 color:#446CB3;
 }
+
+
+.posts-container li {
+height: 100px;
+}
+
+.posts-container li a img {
+border-radius:4px;
+float: left;
+margin-right:7.2%;
+-webkit-transition: all 0.2s ease-out;
+-moz-transition: all 0.2s ease-out;
+-ms-transition: all 0.2s ease-out;
+-o-transition: all 0.2s ease-out;
+max-width: 175px;
+width:40%;
+}
+
+.posts-container li a span {
+background: #5BC4BE;
+border-radius: 3px;
+font-size: 11px;
+color: white;
+padding: 2px 4px;
+display: inline-block;
+line-height: 13px;
+text-align: center;
+position:relative;
+top: 10px;
+}
+
+.posts-container li a strong {
+display: block;
+font-weight:normal;
+font-size:16px;
+font-family: 'Varela Round', sans-serif;
+color:#000;
+margin: 9px 0 3px 40%;
+-webkit-transition: all 0.2s ease-out;
+-moz-transition: all 0.2s ease-out;
+-ms-transition: all 0.2s ease-out;
+-o-transition: all 0.2s ease-out;
+}
+.posts-container li a big {
+display: block;
+font-weight: normal;
+font-size: 22px;
+color: #999;
+margin-left:33.89%;
+}
+
+.posts-container li a:hover {
+
+}
+
+
+.posts-container li a:hover strong {
+color:#446CB3;
+}
+
 
 .sidebar-divider {
 border-bottom: 1px dotted #CCCCCC;
@@ -6933,4 +6998,3 @@ hr {
     top: -6px;
 }
 .fb_iframe_widget { top: -6px; }
-
