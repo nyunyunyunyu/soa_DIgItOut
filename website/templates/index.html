@@ -416,29 +416,28 @@
                     dayChart.setOption(dayOption);
                 }
             });
+            // 百度地图API功能
+            var map = new BMap.Map("trace-map");
+            map.centerAndZoom(new BMap.Point(116.404, 39.915), 6);
+            // 编写自定义函数,创建标注
+            function addMarker(point){
+              var marker = new BMap.Marker(point);
+              map.addOverlay(marker);
+            }
+            map.enableScrollWheelZoom();
+            // 随机向地图添加25个标注
+            var beijingPosition = new BMap.Point(116.432045, 39.910683),
+                hangzhouPosition = new BMap.Point(120.129721, 30.314429),
+                taiwanPosition = new BMap.Point(121.491121, 25.127053);
+            var points = [beijingPosition,hangzhouPosition, taiwanPosition];
+            for(var i in points){
+                addMarker(points[i]);
+            }
+            var curve = new BMapLib.CurveLine(points, {strokeColor:"blue", strokeWeight:3, strokeOpacity:0.5}); //创建弧线对象
+            map.addOverlay(curve); //添加到地图中
+            // curve.enableEditing(); //开启编辑功能
 
         });
-
-        // 百度地图API功能
-        var map = new BMap.Map("trace-map");
-        map.centerAndZoom(new BMap.Point(116.404, 39.915), 6);
-        // 编写自定义函数,创建标注
-        function addMarker(point){
-          var marker = new BMap.Marker(point);
-          map.addOverlay(marker);
-        }
-        map.enableScrollWheelZoom();
-        // 随机向地图添加25个标注
-        var beijingPosition=new BMap.Point(116.432045,39.910683),
-            hangzhouPosition=new BMap.Point(120.129721,30.314429),
-            taiwanPosition=new BMap.Point(121.491121,25.127053);
-        var points = [beijingPosition,hangzhouPosition, taiwanPosition];
-        for(var i in points){
-            addMarker(points[i]);
-        }
-        var curve = new BMapLib.CurveLine(points, {strokeColor:"blue", strokeWeight:3, strokeOpacity:0.5}); //创建弧线对象
-        map.addOverlay(curve); //添加到地图中
-        // curve.enableEditing(); //开启编辑功能
 
     </script>
 
