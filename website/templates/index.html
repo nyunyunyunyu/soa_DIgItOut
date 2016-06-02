@@ -10,6 +10,7 @@
     <script type="text/javascript" src="http://api.map.baidu.com/library/CurveLine/1.5/src/CurveLine.min.js"></script>
     <link href="/static/flat-ui-dist/css/all.css" rel="stylesheet">
     <link href="/static/flat-ui-dist/css/style.css" rel="stylesheet">
+    <script type="text/javascript" src="/static/flat-ui-dist/js/main-v2.js"></script>
 {% endblock %}
 
 {% block body %}
@@ -20,12 +21,23 @@
         <section class="promo-section">
             <div class="holder">
                 <h1>Dig It Out<dt>1.0.0</dt></h1>
+
                 <div class="input-group" style="width:60%;text-align:center;margin:0 auto">
                     <input type="text" class="form-control" placeholder="please input a Weibo name(id)" id="search-query-3">
                     <span class="input-group-btn">
                     <button id="wordcloud_text" type="submit" class="btn"><span class="fui-search"></span></button>
                     </span>
                 </div>
+
+                <br/>
+
+                <!-- <div id="slider" style="width:50%;text-align:center;margin:0 auto" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false">
+                    <div class="ui-slider-segment"></div>
+                    <div class="ui-slider-segment"></div>
+                    <div class="ui-slider-segment"></div>
+                    <div class="ui-slider-range ui-widget-header ui-slider-range-min" style="width: 25%;"></div>
+                    <a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: 25%;"></a>
+                </div> -->
             </div>
         </section>
 
@@ -47,6 +59,54 @@
             </span>
         </a>
 
+        <div id="insert_section"></div>
+
+        <!-- <section class="item-section">
+            <div class="holder">
+                <h2>Time of Posts</h2>
+                <br/>
+                <div id="time-chart" style="width:1200px;height:600px;text-align:center;margin:0 auto"></div>
+            </div>
+        </section>
+
+        <section class="base-section">
+            <div class="holder highlight">
+                <br/>
+                <br/>
+                <h2>Word Cloud</h2>
+                <br/>
+                <div class="tagsinput-primary" style="width:500px;height:200px;text-align:center;margin:0 auto">
+                    <input id="wordcloud_show" name="tagsinput-02" class="tagsinput" data-role="tagsinput" value="" style="display: none">
+                </div>
+                <br/>
+                <br/>
+                <br/>
+            </div>
+        </section>
+
+        <section class="icon-section">
+            <div class="holder">
+                <h2>Chart of Posts Week and Day</h2>
+                <br/>
+                <div id="week-day-chart" style="width:1000px;height:500px;text-align:center;margin:0 auto">
+                    <div id="week-chart" style="float:left;height:500px;width:500px">
+                    </div>
+                    <div id="day-chart" style="float:left;height:500px;width:500px">
+                    </div>
+                    <div style="clear:both"></div>
+                    </div>
+            </div>
+        </section>
+
+        <section class="prototype-section">
+            <div class="holder">
+                <h2>Trace Map</h2>
+                <br/>
+                    <div id="trace-map" style="width:1200px;height:600px;text-align:center;margin:0 auto"></div>
+            </dir>
+        </section> -->
+
+
 
     </article>
     </div>
@@ -54,58 +114,14 @@
 
 
 
-
-    <div class="input-group" style="width:50%;text-align:center;margin:0 auto">
-        <input type="text" class="form-control" placeholder="please input a Weibo name(id)" id="search-query-3">
-        <span class="input-group-btn">
-        <button id="wordcloud_text" type="submit" class="btn"><span class="fui-search"></span></button>
-        </span>
-    </div>
-    <br/>
-    <div id="slider" style="width:50%;text-align:center;margin:0 auto" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false">
-        <div class="ui-slider-segment"></div>
-        <div class="ui-slider-segment"></div>
-        <div class="ui-slider-segment"></div>
-        <div class="ui-slider-range ui-widget-header ui-slider-range-min" style="width: 25%;"></div>
-        <a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: 25%;"></a>
-    </div>
-
-
-    <br/>
-
-    <div class="tagsinput-primary" style="width:500px;height:200px;text-align:center;margin:0 auto">
-        <input id="wordcloud_show" name="tagsinput-02" class="tagsinput" data-role="tagsinput" value="" style="display: none">
-    </div>
-
-
-    <br/>
-
-    <div id="time-chart" style="width:1200px;height:600px;text-align:center;margin:0 auto"></div>
-
-    <br/>
-
-    <div id="week-day-chart" style="width:1000px;height:500px;text-align:center;margin:0 auto">
-        <div id="week-chart" style="float:left;height:500px;width:500px">
-            <!-- week-chart -->
-        </div>
-        <div id="day-chart" style="float:left;height:500px;width:500px">
-            <!-- day-chart -->
-        </div>/
-        <div style="clear:both"></div>
-        <!--这个层很有用，必须要，否则可能不兼容。-->
-    </div>
-
-    <br />
-
-    <div id="trace-map" style="width:1200px;height:600px;text-align:center;margin:0 auto"></div>
-
-    <br/>
-    <br/>
-
-
+    <script type="text/javascript" src="/static/flat-ui-dist/js/application.js"></script>
 
     <script type="text/javascript">
+        var insertText = "<section class=\"item-section\"><br/><br/><div class=\"holder\"><h2>Time of Posts</h2><br/><br/><div id=\"time-chart\" style=\"width:1200px;height:600px;text-align:center;margin:0 auto\"></div></div><br/><br/><br/></section> <section class=\"base-section\"><div class=\"holder highlight\"><br/><br/><h2>Word Cloud</h2><br/><div class=\"tagsinput-primary\" style=\"width:1000px;height:200px;text-align:center;margin:0 auto\"><input id=\"wordcloud_show\" name=\"tagsinput-02\" class=\"tagsinput\" data-role=\"tagsinput\" value=\"\" style=\"display: none\"></div><br/><br/><br/></div></section><section class=\"icon-section\"><div class=\"holder\"><h2>Chart of Posts Week and Day</h2><br/><div id=\"week-day-chart\" style=\"width:1000px;height:500px;text-align:center;margin:0 auto\"><div id=\"week-chart\" style=\"float:left;height:500px;width:500px\"></div><div id=\"day-chart\" style=\"float:left;height:500px;width:500px\"></div><div style=\"clear:both\"></div></div></div></section><section class=\"prototype-section\"><div class=\"holder\"><h2>Trace Map</h2><br/><div id=\"trace-map\" style=\"width:1200px;height:600px;text-align:center;margin:0 auto\"></div></dir></section>";
         $('#wordcloud_text').click(function() {
+           // Code to be inserted
+            $("#insert_section").html(insertText);
+
             var wordcloud_text = $("#search-query-3").val();
             var d = {data: JSON.stringify({"text": wordcloud_text})};
             var optiondata;
