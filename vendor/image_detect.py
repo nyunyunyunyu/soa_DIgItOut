@@ -1,13 +1,14 @@
 __author__ = 'Nyunyunyunyu'
 
-from facepp import API, File
-import constant
 from pprint import pformat
-import time
-import random
-import requests
 import os
+
+import requests
 import pymongo
+
+from vendor.facepp import API, File
+import constant
+
 
 def print_result(hint, result):
     def encode(obj):

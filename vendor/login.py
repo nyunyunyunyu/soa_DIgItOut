@@ -5,11 +5,12 @@
 # @Last Modified time: 2016-05-09 13:47:40
 
 import json
-import base64
-import requests
 import random
 
-from agents import AGENTS
+import requests
+
+from vendor.agents import AGENTS
+
 
 def getCookies(weibo):
     """ 获取Cookies """
