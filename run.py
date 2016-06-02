@@ -12,6 +12,8 @@ import re
 import time
 import datetime
 
+from spider import *
+
 # ...
 app = Flask(__name__)
 
@@ -59,13 +61,20 @@ def api_wordcloud():
     id_str = d['text']
     print (id_str)
 
-    rd = open('./static/my_weibo_list.json', 'r')
-    my_weibo_list = json.loads(rd.read())
-    rd.close()
+    my_spider = Spider()
+    latest, my_weibo_list = my_spider.crawl( my_spider.username_to_uid( id_str ) )
+
+    print my_spider.username_to_uid( id_str )
+
+
+    # rd = open('./static/my_weibo_list.json', 'r')
+    # my_weibo_list = json.loads(rd.read())
+    # rd.close()
 
     alltext = u''
     import pdb
-    # pdb.set_trace()
+    pdb.set_trace()
+
     for item in my_weibo_list['weibo_list']:
         text = re.sub(r'<[^>]*>', '', item['text'])
         alltext += text
@@ -85,7 +94,7 @@ def api_wordcloud():
 
     # 437c5088a88bbf2a3e1ffc15abb469a2
     data = {'appkey': '258bbb3f7adf4c0e7fb74129d59865e9', 'text': alltext[0:600]}
-    # 
+    #
     url = 'http://qingyu.thunlp.org/api/KeywordExtract'
     r = requests.post(url, data=data)
     print (r.text)
@@ -118,16 +127,16 @@ def api_wordcloud():
     print daychart
 
     return jsonify({ 'ans': ans, 'time': timepoint, 'week': weekchart, 'day': daychart}), 201
-    
+
 # @app.route('/user/<name>')
 # def user(name=None):
 #     return render_template('user.html', name=name)
 
-# @app.route("/login",methods=['POST','GET']) 
+# @app.route("/login",methods=['POST','GET'])
 # def login():
 #     error = None
 #     if request.method == 'POST':
-#         if request.form['username'] != 'admin' or request.form['password'] != 'admin123': 
+#         if request.form['username'] != 'admin' or request.form['password'] != 'admin123':
 #                 error= "sorry"
 #         else:
 #             return redirect(url_for('index'))
@@ -136,4 +145,3 @@ def api_wordcloud():
 if __name__ == '__main__':
     app.debug = True
     app.run() #app.run(host='0.0.0.0')
-
