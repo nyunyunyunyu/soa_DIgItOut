@@ -208,6 +208,12 @@ class Spider:
         return {'uid': inputid, 'updated_at': time.time(), 'weibo_list': self.get_weibo(inputid),
                         'info_dict': self.get_info(inputid),}
 
+    def username_to_uid(self, username):
+        res=requests.get('https://api.weibo.com/2/users/show.json',
+                         params={'source': constant.WEIBO_API_KEY, 'screen_name': username},
+                         cookies=self.cookdic)
+        return json.loads(res.text)['idstr']
+
     def crawl(self, inputid):
         # 'info_dict':get_info(inputid),
         # cookdic = login.getCookies([{'no':username, 'psw':password}])[0]
