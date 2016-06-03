@@ -1,16 +1,31 @@
 {% extends "base.html" %}
 
 {% block head %}
+    <!-- <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="/static/Bootstrap-Image-Gallery-3.4.2/css/blueimp-gallery.min.css">
+    <link rel="stylesheet" href="/static/Bootstrap-Image-Gallery-3.4.2/css/bootstrap-image-gallery.css">
+    <link rel="stylesheet" href="/static/Bootstrap-Image-Gallery-3.4.2/css/demo.css">
+
+    <script src="/static/flat-ui-dist/js/jquery-2.2.3.min.js"></script>
+    <!-- <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> -->
+    <script src="/static/Bootstrap-Image-Gallery-3.4.2/js/jquery.blueimp-gallery.min.js"></script>
+    <script src="/static/Bootstrap-Image-Gallery-3.4.2/js/bootstrap-image-gallery.js"></script>
+
+
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=akf1Q4p6UlmyZddPl1vhZKBdKm5Cldls"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/library/CurveLine/1.5/src/CurveLine.min.js"></script>
+    <link href="/static/flat-ui-dist/css/flat-ui.min.css" rel="stylesheet">
+    <link href="/static/flat-ui-dist/css/all.css" rel="stylesheet">
+    <link href="/static/flat-ui-dist/css/style.css" rel="stylesheet">
+    <script type="text/javascript" src="/static/flat-ui-dist/js/main-v2.js"></script>
+
     <style type="text/css">
         #allmap {width: 100%;height: 100%;overflow: hidden;margin:0;}
         #l-map{height:100%;width:78%;float:left;border-right:2px solid #bcbcbc;}
         #r-result{height:100%;width:20%;float:left;}
     </style>
-    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=akf1Q4p6UlmyZddPl1vhZKBdKm5Cldls"></script>
-    <script type="text/javascript" src="http://api.map.baidu.com/library/CurveLine/1.5/src/CurveLine.min.js"></script>
-    <link href="/static/flat-ui-dist/css/all.css" rel="stylesheet">
-    <link href="/static/flat-ui-dist/css/style.css" rel="stylesheet">
-    <script type="text/javascript" src="/static/flat-ui-dist/js/main-v2.js"></script>
+
+
 {% endblock %}
 
 {% block body %}
@@ -61,25 +76,21 @@
 
         <div id="insert_section"></div>
 
-        <section class="item-section">
+        <!-- <section class="item-section">
             <div class="holder">
                 <br/><br/>
                 <h2>Moments</h2>
                 <br/><br/>
 
-                <button id="album" name="show_album" style="text-align:center;margin:0 auto">
-                  <img id="PicGrid_2" src ="http://pic74.nipic.com/file/20150805/21548131_130721182800_2.jpg" style="width:300px;height:300px">
-                  <img id="PicGrid_2" src ="http://pic74.nipic.com/file/20150805/21548131_130721182800_2.jpg" style="width:300px;height:300px">
-                  <img id="PicGrid_2" src ="http://pic74.nipic.com/file/20150805/21548131_130721182800_2.jpg" style="width:300px;height:300px">
-                  <img id="PicGrid_2" src ="http://pic74.nipic.com/file/20150805/21548131_130721182800_2.jpg" style="width:300px;height:300px">
-                  <img id="PicGrid_2" src ="http://pic74.nipic.com/file/20150805/21548131_130721182800_2.jpg" style="width:300px;height:300px">
-                </button>
+                <div name="show_album" style="text-align:center;margin:0 auto">
+                    <div id="album" name="album"/>
+                </div>
 
                 <br/><br/>
             </div>
         </section>
 
-        <!-- <section class="icon-section">
+        <section class="icon-section">
           <div class="holder">
             <h2>Personal Information</h2>
             <div style="width:80%;text-align:center;margin-left:auto">
@@ -223,29 +234,90 @@
     </div>
     </div>
 
-
+    <div id='gallery_buffer' style="display:none"></div>
+    <div id="links_buffer" style="display:none"></div>
+    <div id="links" style="display:none"></div>
+    <!-- The Bootstrap Image Gallery lightbox, should be a child element of the document body -->
+    <div id="blueimp-gallery" class="blueimp-gallery" style="display:none">
+    <!-- The container for the modal slides -->
+    <div class="slides"></div>
+    <!-- Controls for the borderless lightbox -->
+    <h3 class="title"></h3>
+    <a class="prev">‹</a>
+    <a class="next">›</a>
+    <a class="close">×</a>
+    <a class="play-pause"></a>
+    <ol class="indicator"></ol>
+    <!-- The modal dialog, which will be used to wrap the lightbox content -->
+    <div class="modal fade">
+    <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    <div class="modal-header">
+    <button type="button" class="close" aria-hidden="true">&times;</button>
+    <h4 class="modal-title"></h4>
+    </div>
+    <div class="modal-body next"></div>
+    <div class="modal-footer">
+    <button type="button" class="btn btn-default pull-left prev">
+    <i class="glyphicon glyphicon-chevron-left"></i>
+    Previous
+    </button>
+    <button type="button" class="btn btn-primary next">
+    Next
+    <i class="glyphicon glyphicon-chevron-right"></i>
+    </button>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
 
     <script type="text/javascript" src="/static/flat-ui-dist/js/application.js"></script>
 
     <script type="text/javascript">
-        $('#album').click( function(){
-            var d = {data: JSON.stringify({"divname": $("#album").prop("name"), "username": $("#search-query-3").val()})};
-            $.ajax("/api/piccluster", {
-                type: 'POST',
-                data: d,
-                dataType: 'json',
-                success: function(dat, sta){
+        function insert_galleries (result, toInsert) {
+            $('#gallery_buffer').html('');
+            $('#links_buffer').html('');
+            // Add the demo images as links with thumbnails to the page:
+            var count = 0;
+            for (people in result){
+                var new_links = $('#links').clone();
+                new_links.attr('id', 'links' + count);
+                $('#links_buffer').append(new_links);
+                var new_glallery = $('#blueimp-gallery').clone();
+                new_glallery.attr('id', 'blueimp-gallery' + count);
 
-                    var url_list = dat['url_list'];
-                    console.log(url_list);
-
+                $('#gallery_buffer').append(new_glallery);
+                for (image in result[people]){
+                    var url = result[people][image];
+                    $('<a/>')
+                    .append($('<img>').prop('src', url))
+                    .prop('href', url)
+                    .attr('data-gallery', '')
+                    .appendTo(new_links);
                 }
-            });
+                var image_id = 'to_click' + count;
+                image_button = $('<img/>').prop('src', result[people][0]).attr('id', image_id)
+                image_button.appendTo(toInsert)
+                image_button.attr('num',count)
+                image_button.click(function (event) {
+                    event.preventDefault();
+                    var w=event.target.attributes['num'].value;
+                    blueimp.Gallery($("#links"+w).children($('a')), {useBootstrapModal: true});
+                });
+                count++;
+            }
+        }
+        $().ready(function(){
+            content = [['http://ww4.sinaimg.cn/mw690/005soBCbjw1f2dyzdc8r4j30qo1bejzn.jpg'],['http://ww4.sinaimg.cn/mw690/005soBCbjw1f2dyzdo8smj30pb1900zt.jpg']];
+            insert_galleries(content, $('.form-group'));
         });
+        </script>
 
-
-        var insertText = "<section class=\"icon-section\"><div class=\"holder\"><h2>Personal Information</h2><div style=\"width:80%;text-align:center;margin-left:auto\"><div class=\"form-group\" style=\"text-align:center;margin-left:auto\"><img id=\"avatar_large\" src=\"\"></img><table><tr><td><h6>用户昵称</h6></td><td><input class=\"form-control\" type=\"text\" id=\"screen_name\" value=\"\" style=\"width:400px\"/></td></tr><tr><td><h6>微博地址</h6></td><td><input class=\"form-control\" type=\"text\" id=\"profile_url\" value=\"\"/></td></tr><tr><td><h6>用户UID</h6></td><td><input class=\"form-control\" type=\"text\" id=\"idstr\" value=\"\"/></td></tr><tr><td><h6>性别</h6></td><td><input class=\"form-control\" type=\"text\" id=\"gender\" value=\"\"/></td></tr><tr><td><h6>用户所在地</h6></td><td><input class=\"form-control\" type=\"text\" id=\"location\" value=\"\"/></td></tr><tr><td><h6>注册时间</h6></td><td><input class=\"form-control\" type=\"text\" id=\"created_at\" value=\"\"/></td></tr><tr><td><h6>粉丝数</h6></td><td><input class=\"form-control\" type=\"text\" id=\"followers_count\" value=\"\"/></td></tr><tr><td><h6>关注数</h6></td><td><input class=\"form-control\" type=\"text\" id=\"friends_count\" value=\"\"/></td></tr><tr><td><h6>用户的互粉数</h6></td><td><input class=\"form-control\" type=\"text\" id=\"bi_followers_count\" value=\"\"/></td></tr></table></div></div></div></section><section class=\"item-section\"><br/><br/><div class=\"holder\"><h2>Time of Posts</h2><br/><br/><div id=\"time-chart\" style=\"width:1200px;height:600px;text-align:center;margin:0 auto\"></div></div><br/><br/><br/></section> <section class=\"base-section\"><div class=\"holder highlight\"><br/><br/><h2>Word Cloud</h2><br/><div class=\"tagsinput-primary\" style=\"width:1000px;height:200px;text-align:center;margin:0 auto\"><input id=\"wordcloud_show\" name=\"tagsinput-02\" class=\"tagsinput\" data-role=\"tagsinput\" value=\"\" style=\"display: none\"></div><br/><br/><br/></div></section><section class=\"icon-section\"><div class=\"holder\"><h2>Chart of Posts Week and Day</h2><br/><div id=\"week-day-chart\" style=\"width:1000px;height:500px;text-align:center;margin:0 auto\"><div id=\"week-chart\" style=\"float:left;height:500px;width:500px\"></div><div id=\"day-chart\" style=\"float:left;height:500px;width:500px\"></div><div style=\"clear:both\"></div></div></div></section><section class=\"prototype-section\"><div class=\"holder\"><h2>Trace Map</h2><br/><div id=\"trace-map\" style=\"width:1200px;height:600px;text-align:center;margin:0 auto\"></div></dir></section>";
+    <script type="text/javascript">
+        var insertText = "<section class=\"icon-section\"><div class=\"holder\"><h2>Personal Information</h2><div style=\"width:80%;text-align:center;margin-left:auto\"><div class=\"form-group\" style=\"text-align:center;margin-left:auto\"><img id=\"avatar_large\" src=\"\"></img><table><tr><td><h6>用户昵称</h6></td><td><input class=\"form-control\" type=\"text\" id=\"screen_name\" value=\"\" style=\"width:400px\"/></td></tr><tr><td><h6>微博地址</h6></td><td><input class=\"form-control\" type=\"text\" id=\"profile_url\" value=\"\"/></td></tr><tr><td><h6>用户UID</h6></td><td><input class=\"form-control\" type=\"text\" id=\"idstr\" value=\"\"/></td></tr><tr><td><h6>性别</h6></td><td><input class=\"form-control\" type=\"text\" id=\"gender\" value=\"\"/></td></tr><tr><td><h6>用户所在地</h6></td><td><input class=\"form-control\" type=\"text\" id=\"location\" value=\"\"/></td></tr><tr><td><h6>注册时间</h6></td><td><input class=\"form-control\" type=\"text\" id=\"created_at\" value=\"\"/></td></tr><tr><td><h6>粉丝数</h6></td><td><input class=\"form-control\" type=\"text\" id=\"followers_count\" value=\"\"/></td></tr><tr><td><h6>关注数</h6></td><td><input class=\"form-control\" type=\"text\" id=\"friends_count\" value=\"\"/></td></tr><tr><td><h6>用户的互粉数</h6></td><td><input class=\"form-control\" type=\"text\" id=\"bi_followers_count\" value=\"\"/></td></tr></table></div></div></div></section><section class=\"item-section\"><br/><br/><div class=\"holder\"><h2>Time of Posts</h2><br/><br/><div id=\"time-chart\" style=\"width:1200px;height:600px;text-align:center;margin:0 auto\"></div></div><br/><br/><br/></section> <section class=\"base-section\"><div class=\"holder highlight\"><br/><br/><h2>Word Cloud</h2><br/><div class=\"tagsinput-primary\" style=\"width:1000px;height:200px;text-align:center;margin:0 auto\"><input id=\"wordcloud_show\" name=\"tagsinput-02\" class=\"tagsinput\" data-role=\"tagsinput\" value=\"\" style=\"display: none\"></div><br/><br/><br/></div></section><section class=\"icon-section\"><div class=\"holder\"><h2>Chart of Posts Week and Day</h2><br/><div id=\"week-day-chart\" style=\"width:1000px;height:500px;text-align:center;margin:0 auto\"><div id=\"week-chart\" style=\"float:left;height:500px;width:500px\"></div><div id=\"day-chart\" style=\"float:left;height:500px;width:500px\"></div><div style=\"clear:both\"></div></div></div></section><section class=\"prototype-section\"><div class=\"holder\"><h2>Trace Map</h2><br/><div id=\"trace-map\" style=\"width:1200px;height:600px;text-align:center;margin:0 auto\"></div></dir></section><section class=\"item-section\"><div class=\"holder\"><br/><br/><h2>Moments</h2><br/><br/><div name=\"show_album\" style=\"text-align:center;margin:0 auto\"><div id=\"album\" name=\"album\"/></div><br/><br/></div></section>";
         var first_time_to_load = 0;
+
         $('#wordcloud_text').click(function() {
            // Code to be inserted
             if(first_time_to_load==0){
@@ -253,6 +325,22 @@
               $("#insert_section").html(insertText);
             }
 
+            //
+            var dd = {data: JSON.stringify({"username": $("#search-query-3").val()})};
+            $.ajax("/api/piccluster", {
+                type: 'POST',
+                data: dd,
+                dataType: 'json',
+                success: function(dat, sta){
+                    var url_list = dat['url_list'];
+
+                    console.log(url_list);
+
+                    insert_galleries (url_list, $('#album'));
+                }
+            });
+
+            //
             var wordcloud_text = $("#search-query-3").val();
             var d = {data: JSON.stringify({"text": wordcloud_text})};
             var optiondata;

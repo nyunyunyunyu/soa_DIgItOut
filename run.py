@@ -32,7 +32,6 @@ def api_piccluster():
     if d is None:
         abort(400) # missing arguments
 
-    print d['divname']
     print d['username']
 
     my_spider = Spider()
@@ -47,9 +46,8 @@ def api_piccluster():
         each_list = []
         for no in series:
             each_list.append(face_info[no]['url'])
-        url_list.append( each_list )
+        url_list.append( list(set(each_list)) )
     # print url_list
-
 
     return jsonify({ 'url_list': url_list}), 201
 
