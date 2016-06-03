@@ -70,13 +70,29 @@ def api_wordcloud():
     # rd.close()
 
     alltext = u''
-    import pdb
-    pdb.set_trace()
-
+    # tta = my_weibo_list['weibo_list']
+    # import pdb
+    # pdb.set_trace()
+    lon, lat = [], []
     for item in my_weibo_list['weibo_list']:
         text = re.sub(r'<[^>]*>', '', item['text'])
         alltext += text
-
+        if (item.has_key('location_lon') and item.has_key('location_lon')):
+            lo = float(item['location_lon'])
+            la = float(item['location_lat'])
+            if(len(lon)==0):
+                lon.append(lo)
+                lat.append(la)
+                print '----'
+            else:
+                if abs(lo-lon[-1])<0.2 and abs(la-lat[-1])<0.2:
+                    continue
+                else:
+                    lon.append(lo)
+                    lat.append(la)
+                    print '----'
+    print lon
+    print lat
     # alltext = u'地区地区昵称地区'
 
     # headers = {  "Content-Type" : "application/json", "Accept": "application/json", "X-Token": "EGO3bf5q.5590.K4UZUWYVnTIQ"}
@@ -124,7 +140,7 @@ def api_wordcloud():
     print weekchart
     print daychart
 
-    return jsonify({ 'ans': ans, 'time': timepoint, 'week': weekchart, 'day': daychart}), 201
+    return jsonify({ 'ans': ans, 'time': timepoint, 'week': weekchart, 'day': daychart, 'lon':lon, 'lat':lat}), 201
 
 # @app.route('/user/<name>')
 # def user(name=None):

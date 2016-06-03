@@ -118,26 +118,36 @@
 
     <script type="text/javascript">
         var insertText = "<section class=\"item-section\"><br/><br/><div class=\"holder\"><h2>Time of Posts</h2><br/><br/><div id=\"time-chart\" style=\"width:1200px;height:600px;text-align:center;margin:0 auto\"></div></div><br/><br/><br/></section> <section class=\"base-section\"><div class=\"holder highlight\"><br/><br/><h2>Word Cloud</h2><br/><div class=\"tagsinput-primary\" style=\"width:1000px;height:200px;text-align:center;margin:0 auto\"><input id=\"wordcloud_show\" name=\"tagsinput-02\" class=\"tagsinput\" data-role=\"tagsinput\" value=\"\" style=\"display: none\"></div><br/><br/><br/></div></section><section class=\"icon-section\"><div class=\"holder\"><h2>Chart of Posts Week and Day</h2><br/><div id=\"week-day-chart\" style=\"width:1000px;height:500px;text-align:center;margin:0 auto\"><div id=\"week-chart\" style=\"float:left;height:500px;width:500px\"></div><div id=\"day-chart\" style=\"float:left;height:500px;width:500px\"></div><div style=\"clear:both\"></div></div></div></section><section class=\"prototype-section\"><div class=\"holder\"><h2>Trace Map</h2><br/><div id=\"trace-map\" style=\"width:1200px;height:600px;text-align:center;margin:0 auto\"></div></dir></section>";
+        var first_time_to_load = 0;
         $('#wordcloud_text').click(function() {
            // Code to be inserted
-            $("#insert_section").html(insertText);
+            if(first_time_to_load==0){
+              first_time_to_load = 1;
+              $("#insert_section").html(insertText);
+            }
 
             var wordcloud_text = $("#search-query-3").val();
             var d = {data: JSON.stringify({"text": wordcloud_text})};
             var optiondata;
             var dataByWeek;
             var dataByDay;
+            var dataLon;
+            var dataLat;
             $.ajax("/api/wordcloud", {
                 type: 'POST',
                 data: d,
                 dataType: 'json',
                 success: function(dat, sta){
-                    console.log(dat['ans']);
+                    // console.log(dat['ans']);
                     // var arr = JSON.parse(dat['data']);
                     var arr = dat['ans'];
                     optiondata = dat['time']
                     dataByWeek = dat['week']
                     dataByDay = dat['day']
+                    dataLon = dat['lon']
+                    dataLat = dat['lat']
+                    console.log('fffffffffff')
+                    console.log(dataLon)
 
                     getMax = function(cc){
                         var c = -1;
@@ -152,8 +162,8 @@
                     dataByWeek_max = getMax(dataByWeek)*1.1;
                     dataByDay_max = getMax(dataByDay)*1.1;
 
-                    console.log(optiondata);
-                    console.log(arr);
+                    // console.log(optiondata);
+                    // console.log(arr);
                     var val = '';
                     for(var w in arr){
                     	// console.log(arr[w][1]);
@@ -221,7 +231,7 @@
                             name: 'Punch Card',
                             type: 'scatter',
                             symbolSize: function (val) {
-                                return val[2];
+                                return val[2]*2;
                             },
                             data: data
                         }]
@@ -239,8 +249,8 @@
                             opacity: 0.5
                         }
                     };
-                    console.log(dataByWeek);
-                    console.log(dataByDay);
+                    // console.log(dataByWeek);
+                    // console.log(dataByDay);
                     dataByWeek = [dataByWeek];
                     dataByDay = [dataByDay];
                     weekOption = {
@@ -414,29 +424,33 @@
                     };
                     // 指定图表的配置项和数据
                     dayChart.setOption(dayOption);
+
+                    // 百度地图API功能
+                    var map = new BMap.Map("trace-map");
+                    map.centerAndZoom(new BMap.Point(116.404, 39.915), 6);
+                    // 编写自定义函数,创建标注
+                    function addMarker(point){
+                      var marker = new BMap.Marker(point);
+                      map.addOverlay(marker);
+                    }
+                    map.enableScrollWheelZoom();
+
+
+                    var points = []
+                    for(var i in dataLon){
+                      var tem_pos = new BMap.Point(dataLon[i], dataLat[i]);
+                      console.log(tem_pos);
+                      points.push(tem_pos);
+                    }
+                    console.log(points);
+                    for(var i in points){
+                        addMarker(points[i]);
+                    }
+                    var curve = new BMapLib.CurveLine(points, {strokeColor:"blue", strokeWeight:3, strokeOpacity:0.5}); //创建弧线对象
+                    map.addOverlay(curve); //添加到地图中
+
                 }
             });
-            // 百度地图API功能
-            var map = new BMap.Map("trace-map");
-            map.centerAndZoom(new BMap.Point(116.404, 39.915), 6);
-            // 编写自定义函数,创建标注
-            function addMarker(point){
-              var marker = new BMap.Marker(point);
-              map.addOverlay(marker);
-            }
-            map.enableScrollWheelZoom();
-            // 随机向地图添加25个标注
-            var beijingPosition = new BMap.Point(116.432045, 39.910683),
-                hangzhouPosition = new BMap.Point(120.129721, 30.314429),
-                taiwanPosition = new BMap.Point(121.491121, 25.127053);
-            var points = [beijingPosition,hangzhouPosition, taiwanPosition];
-            for(var i in points){
-                addMarker(points[i]);
-            }
-            var curve = new BMapLib.CurveLine(points, {strokeColor:"blue", strokeWeight:3, strokeOpacity:0.5}); //创建弧线对象
-            map.addOverlay(curve); //添加到地图中
-            // curve.enableEditing(); //开启编辑功能
-
         });
 
     </script>

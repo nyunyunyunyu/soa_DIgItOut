@@ -29,11 +29,10 @@ def showjson(s, count):
 
 class Spider:
     def updateCookie(self):
-        cookie = "UOR=www.baidu.com,blog.sina.com.cn,; U_TRS1=000000ac.8d4336b2.566566a9.84409797; vjuids=-d91bc0168.1517c190932.0.c439402b; SGUID=1449485994499_40122227; SINAGLOBAL=59.66.131.172_1449485993.969333; Apache=59.66.131.245_1464931299.610667; ULV=1464931303353:77:5:5:59.66.131.245_1464931299.610667:1464931299687; vjlast=1464931307; lxlrtst=1464923568_o; lxlrttp=1464923568; sso_info=v02m4a4vZy2vaGZhqWnmpeRr52XkKWNg4GpnYals5yHoa2Lpo2vm5KZtY-WoaqRlKW3jIa5iJumqLWMpaGQlJahtpaWrYmdtISljLSQpYy0kKaat5i9jJDAwA==; SUB=_2AkMgDZVNdcNhrAZZkfwRzmzhZYlH-jzEiebBAn7tJhMyAhh77kwtqSWr62ki6J9TxNk2FWrrISuc5oFNjQ..; SUBP=0033WrSXqPxfM72wWs9jqgMF55529P9D9WFSmMZEdn1kmBrdvnWgNJZF5JpV8NSaqgxD9cLXdNHXBsLXIPS7wsXVqcv_"
+        cookie = "SINAGLOBAL=8628855084534.734.1449487060315; wb_publish_vip_2825896900=1; wb_bub_hot_5894427394=1; YF-Ugrow-G0=ad83bc19c1269e709f753b172bddb094; YF-V5-G0=d8809959b4934ec568534d2b6c204def; WBStore=8ca40a3ef06ad7b2|undefined; _s_tentry=-; Apache=1609724347533.7341.1464931451743; ULV=1464931451914:49:3:5:1609724347533.7341.1464931451743:1464886314575; YF-Page-G0=59104684d5296c124160a1b451efa4ac; wb_bub_hot_2825896900=1; myuid=2825896900; UOR=www.sina.com.cn,weibo.com,login.sina.com.cn; WBtopGlobal_register_version=06c53677ab86c260; SUS=SID-5894427394-1464961470-GZ-ye4x2-99dbb84021942d8afa5244e2c265201c; SUE=es%3Db1221f20ded66f8bb3be7c2632207dfd%26ev%3Dv1%26es2%3Dd965e48ee749e461350306ce4a591144%26rs0%3DTVTnle7LzTCdU6FzvOcQoBDLu9vKIE65SkBHRklGkKqgVE4sQ2E7SQYadN5F8gUX3frqjXUADw%252B5InucBJeSZb1SGqbs5EvV%252FIDKFZpgUwmpAZnboL590GM15L3KZIReTrXATPdQ0MwqSHMQ4Qgxyq%252BJCKtFxVkWg4fZamzphok%253D%26rv%3D0; SUP=cv%3D1%26bt%3D1464961470%26et%3D1465047870%26d%3Dc909%26i%3D201c%26us%3D1%26vf%3D0%26vt%3D0%26ac%3D0%26st%3D0%26uid%3D5894427394%26name%3Dsoadigitout%2540itispxm.com%26nick%3Ddigitout%26fmp%3D%26lcp%3D; SUB=_2A256VfnuDeTxGeNG4lYV8inPwjiIHXVZI2wmrDV8PUNbuNBeLRemkW9LHesleaAglVgABwb_I0joK2WREoC9qw..; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WFSmMZEdn1kmBrdvnWgNJZF5JpX5K2hUgL.Fo-R1KBXeoM01KB2dJLoI7y.IgUDUsvfU5tt; SUHB=0HTxFnVUuUh7iC; ALF=1465566261; SSOLoginState=1464961470; un=soadigitout@itispxm.com"
         self.cookdic = dict(Cookie=cookie)
 
     def __init__(self):
-        self.cccccc = 1
         self.updateCookie()
         self.client = pymongo.MongoClient(constant.MONGODB_HOST, constant.MONGODB_PORT)
         if (not 'soa' in self.client.database_names() or not 'weibo' in self.client['soa'].collection_names()):
@@ -51,17 +50,13 @@ class Spider:
                 content if success
                 'Fail' if fail
         """
-        if(self.cccccc % 20 == 0):
-            time.sleep(2)
-            self.cccccc = 0
         try:
-            req = requests.get(toUrl, cookies=self.cookdic, timeout=1)
-            self.cccccc += 1
+            req = requests.get(toUrl, cookies=self.cookdic, timeout=50)
         except:
             return None
         if req.status_code != requests.codes.ok:
             print "haven't get 200, status_code is: " + str(req.status_code);
-            sys.exit(-1)
+            return 1
         return req
 
     def get_weibo(self, inputid):
@@ -82,6 +77,8 @@ class Spider:
             tmp = self.get_content(inputUrl + str(i))
             if tmp is None:
                 continue
+            if tmp == 1:
+                return my_weibo_list
             print tmp.text
             s = json.loads(tmp.text)
 
@@ -221,7 +218,10 @@ if __name__ == "__main__":
     print "spider test begin ~~"
     print "----------"
     my_spider = Spider()
+    # my_spider.clear_cache()
+    print "Getting Weibo..."
     latest, my_weibo_list = my_spider.crawl(sys.argv[1])
+    print "Picture Cluster..."
     image_detect.get_grouping_result(my_weibo_list, latest)
     # showjson(my_weibo_list,0)
 
