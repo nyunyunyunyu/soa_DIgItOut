@@ -160,4 +160,4 @@ def api_wordcloud():
 
 if __name__ == '__main__':
     app.debug = True
-    app.run() #app.run(host='0.0.0.0')
+    app.run(threaded=True) #app.run(host='0.0.0.0')
