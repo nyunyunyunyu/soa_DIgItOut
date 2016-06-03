@@ -9,7 +9,7 @@ import random
 
 import requests
 
-from vendor.agents import AGENTS
+from agents import AGENTS
 
 
 def getCookies(weibo):
@@ -40,4 +40,3 @@ def getCookies(weibo):
             print "Failed!"
             raise Exception("Failed to get Cookie.")
     return cookies
-

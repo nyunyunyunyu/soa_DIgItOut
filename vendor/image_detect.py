@@ -6,7 +6,7 @@ import os
 import requests
 import pymongo
 
-from vendor.facepp import API, File
+from facepp import API, File
 import constant
 
 

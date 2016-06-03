@@ -12,7 +12,7 @@ import re
 import time
 import datetime
 
-from spider import *
+from vendor.spider import *
 
 # ...
 app = Flask(__name__)
@@ -58,14 +58,12 @@ def api_wordcloud():
     # ans = r.text
     # return jsonify({ 'data': ans }), 201
 
-    id_str = d['text']
-    print (id_str)
-
+    usrname_str = d['text']
+    print (usrname_str)
     my_spider = Spider()
-    latest, my_weibo_list = my_spider.crawl( my_spider.username_to_uid( id_str ) )
-
-    print my_spider.username_to_uid( id_str )
-
+    uid_str = my_spider.username_to_uid( usrname_str )
+    print uid_str
+    latest, my_weibo_list = my_spider.crawl( uid_str )
 
     # rd = open('./static/my_weibo_list.json', 'r')
     # my_weibo_list = json.loads(rd.read())

@@ -8,7 +8,9 @@ import requests
 from bs4 import BeautifulSoup
 import pymongo
 
-from vendor import image_detect, constant
+import image_detect
+import constant
+
 
 
 def showjson(s, count):
@@ -27,10 +29,11 @@ def showjson(s, count):
 
 class Spider:
     def updateCookie(self):
-        cookie = "SINAGLOBAL=1235433884430.6768.1430467351374; wb_publish_vip_2243006675=1; wb_bub_hot_5894427394=1; YF-Page-G0=f70469e0b5607cacf38b47457e34254f; _s_tentry=-; Apache=8905100007286.064.1463722207724; ULV=1463722207739:24:3:2:8905100007286.064.1463722207724:1463500634206; YF-V5-G0=d45b2deaf680307fa1ec077ca90627d1; login_sid_t=79f68dfea5288dec7ccfc85f90279308; YF-Ugrow-G0=169004153682ef91866609488943c77f; WBStore=8ca40a3ef06ad7b2|undefined; WBtopGlobal_register_version=f81ab92b992b2688; un=soadigitout@itispxm.com; myuid=5894427394; UOR=,,login.sina.com.cn; SUS=SID-5894427394-1464667177-GZ-sqp28-ffc75c2bfc64a57aad9d045a74f6201c; SUE=es%3D00d6679771275c2e057bc0da1c13564e%26ev%3Dv1%26es2%3Dcbf7a97147067ee71f306224bb6ce004%26rs0%3DL70x13AZCaJVMXovpxuHvvlrpGEtQlesaaWFZDyNIUlYTGJa65LNJbN3twnw4H76k7RDYQAAUEFnFvNMoGjoEIJZaPiLKZ97tZMGs92OpiH3HrpV6NSc3ENRMqWuDScTgN8OQQeAt1qkM8AjQmNm%252BYU4HzHBYH9L%252B8NwFuWV%252FNs%253D%26rv%3D0; SUP=cv%3D1%26bt%3D1464667177%26et%3D1464753577%26d%3Dc909%26i%3D201c%26us%3D1%26vf%3D0%26vt%3D0%26ac%3D0%26st%3D0%26uid%3D5894427394%26name%3Dsoadigitout%2540itispxm.com%26nick%3Ddigitout%26fmp%3D%26lcp%3D; SUB=_2A256SXx5DeTxGeNG4lYV8inPwjiIHXVZP-qxrDV8PUNbuNBeLXPkkW9LHetmTf4qSt43xZywDnS8rVNl5qENYA..; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WFSmMZEdn1kmBrdvnWgNJZF5JpX5K2hUgL.Fo-R1KBXeoM01KB2dJLoI7y.IgUDUsvfU5tt; SUHB=0YhB9HZhcgnYO6; ALF=1496203176; SSOLoginState=1464667177"
+        cookie = "UOR=www.baidu.com,blog.sina.com.cn,; U_TRS1=000000ac.8d4336b2.566566a9.84409797; vjuids=-d91bc0168.1517c190932.0.c439402b; SGUID=1449485994499_40122227; SINAGLOBAL=59.66.131.172_1449485993.969333; Apache=59.66.131.245_1464931299.610667; ULV=1464931303353:77:5:5:59.66.131.245_1464931299.610667:1464931299687; vjlast=1464931307; lxlrtst=1464923568_o; lxlrttp=1464923568; sso_info=v02m4a4vZy2vaGZhqWnmpeRr52XkKWNg4GpnYals5yHoa2Lpo2vm5KZtY-WoaqRlKW3jIa5iJumqLWMpaGQlJahtpaWrYmdtISljLSQpYy0kKaat5i9jJDAwA==; SUB=_2AkMgDZVNdcNhrAZZkfwRzmzhZYlH-jzEiebBAn7tJhMyAhh77kwtqSWr62ki6J9TxNk2FWrrISuc5oFNjQ..; SUBP=0033WrSXqPxfM72wWs9jqgMF55529P9D9WFSmMZEdn1kmBrdvnWgNJZF5JpV8NSaqgxD9cLXdNHXBsLXIPS7wsXVqcv_"
         self.cookdic = dict(Cookie=cookie)
 
     def __init__(self):
+        self.cccccc = 1
         self.updateCookie()
         self.client = pymongo.MongoClient(constant.MONGODB_HOST, constant.MONGODB_PORT)
         if (not 'soa' in self.client.database_names() or not 'weibo' in self.client['soa'].collection_names()):
@@ -48,9 +51,12 @@ class Spider:
                 content if success
                 'Fail' if fail
         """
-
+        if(self.cccccc % 20 == 0):
+            time.sleep(2)
+            self.cccccc = 0
         try:
             req = requests.get(toUrl, cookies=self.cookdic, timeout=1)
+            self.cccccc += 1
         except:
             return None
         if req.status_code != requests.codes.ok:
