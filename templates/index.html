@@ -59,10 +59,25 @@
             </span>
         </a>
 
-        <div id="insert_section">
+        <div id="insert_section"></div>
 
+        <section class="item-section">
+            <div class="holder">
+                <br/><br/>
+                <h2>Moments</h2>
+                <br/><br/>
 
-        </div>
+                <button id="album" name="show_album" style="text-align:center;margin:0 auto">
+                  <img id="PicGrid_2" src ="http://pic74.nipic.com/file/20150805/21548131_130721182800_2.jpg" style="width:300px;height:300px">
+                  <img id="PicGrid_2" src ="http://pic74.nipic.com/file/20150805/21548131_130721182800_2.jpg" style="width:300px;height:300px">
+                  <img id="PicGrid_2" src ="http://pic74.nipic.com/file/20150805/21548131_130721182800_2.jpg" style="width:300px;height:300px">
+                  <img id="PicGrid_2" src ="http://pic74.nipic.com/file/20150805/21548131_130721182800_2.jpg" style="width:300px;height:300px">
+                  <img id="PicGrid_2" src ="http://pic74.nipic.com/file/20150805/21548131_130721182800_2.jpg" style="width:300px;height:300px">
+                </button>
+
+                <br/><br/>
+            </div>
+        </section>
 
         <!-- <section class="icon-section">
           <div class="holder">
@@ -213,6 +228,22 @@
     <script type="text/javascript" src="/static/flat-ui-dist/js/application.js"></script>
 
     <script type="text/javascript">
+        $('#album').click( function(){
+            var d = {data: JSON.stringify({"divname": $("#album").prop("name"), "username": $("#search-query-3").val()})};
+            $.ajax("/api/piccluster", {
+                type: 'POST',
+                data: d,
+                dataType: 'json',
+                success: function(dat, sta){
+
+                    var url_list = dat['url_list'];
+                    console.log(url_list);
+
+                }
+            });
+        });
+
+
         var insertText = "<section class=\"icon-section\"><div class=\"holder\"><h2>Personal Information</h2><div style=\"width:80%;text-align:center;margin-left:auto\"><div class=\"form-group\" style=\"text-align:center;margin-left:auto\"><img id=\"avatar_large\" src=\"\"></img><table><tr><td><h6>用户昵称</h6></td><td><input class=\"form-control\" type=\"text\" id=\"screen_name\" value=\"\" style=\"width:400px\"/></td></tr><tr><td><h6>微博地址</h6></td><td><input class=\"form-control\" type=\"text\" id=\"profile_url\" value=\"\"/></td></tr><tr><td><h6>用户UID</h6></td><td><input class=\"form-control\" type=\"text\" id=\"idstr\" value=\"\"/></td></tr><tr><td><h6>性别</h6></td><td><input class=\"form-control\" type=\"text\" id=\"gender\" value=\"\"/></td></tr><tr><td><h6>用户所在地</h6></td><td><input class=\"form-control\" type=\"text\" id=\"location\" value=\"\"/></td></tr><tr><td><h6>注册时间</h6></td><td><input class=\"form-control\" type=\"text\" id=\"created_at\" value=\"\"/></td></tr><tr><td><h6>粉丝数</h6></td><td><input class=\"form-control\" type=\"text\" id=\"followers_count\" value=\"\"/></td></tr><tr><td><h6>关注数</h6></td><td><input class=\"form-control\" type=\"text\" id=\"friends_count\" value=\"\"/></td></tr><tr><td><h6>用户的互粉数</h6></td><td><input class=\"form-control\" type=\"text\" id=\"bi_followers_count\" value=\"\"/></td></tr></table></div></div></div></section><section class=\"item-section\"><br/><br/><div class=\"holder\"><h2>Time of Posts</h2><br/><br/><div id=\"time-chart\" style=\"width:1200px;height:600px;text-align:center;margin:0 auto\"></div></div><br/><br/><br/></section> <section class=\"base-section\"><div class=\"holder highlight\"><br/><br/><h2>Word Cloud</h2><br/><div class=\"tagsinput-primary\" style=\"width:1000px;height:200px;text-align:center;margin:0 auto\"><input id=\"wordcloud_show\" name=\"tagsinput-02\" class=\"tagsinput\" data-role=\"tagsinput\" value=\"\" style=\"display: none\"></div><br/><br/><br/></div></section><section class=\"icon-section\"><div class=\"holder\"><h2>Chart of Posts Week and Day</h2><br/><div id=\"week-day-chart\" style=\"width:1000px;height:500px;text-align:center;margin:0 auto\"><div id=\"week-chart\" style=\"float:left;height:500px;width:500px\"></div><div id=\"day-chart\" style=\"float:left;height:500px;width:500px\"></div><div style=\"clear:both\"></div></div></div></section><section class=\"prototype-section\"><div class=\"holder\"><h2>Trace Map</h2><br/><div id=\"trace-map\" style=\"width:1200px;height:600px;text-align:center;margin:0 auto\"></div></dir></section>";
         var first_time_to_load = 0;
         $('#wordcloud_text').click(function() {
