@@ -276,6 +276,7 @@
 
     <script type="text/javascript">
         function insert_galleries (result, toInsert) {
+            toInsert.html('');
             $('#gallery_buffer').html('');
             $('#links_buffer').html('');
             // Add the demo images as links with thumbnails to the page:
@@ -407,7 +408,8 @@
                     	// console.log(arr[w][1]);
                     	val += arr[w][0] + ',';
                     }
-                    $("input[data-role=tagsinput], select[multiple][data-role=tagsinput]").tagsinput()[0].add(val)
+                    $("input[data-role=tagsinput], select[multiple][data-role=tagsinput]").tagsinput()[0].removeAll();
+                    $("input[data-role=tagsinput], select[multiple][data-role=tagsinput]").tagsinput()[0].add(val);
 
                     var myChart = echarts.init(document.getElementById('time-chart'));
 
