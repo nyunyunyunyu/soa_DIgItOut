@@ -70,9 +70,11 @@ def api_wordcloud():
     # rd.close()
 
     alltext = u''
-    # tta = my_weibo_list['weibo_list']
+
     # import pdb
     # pdb.set_trace()
+
+    person_info = my_weibo_list['info_dict']
     lon, lat = [], []
     for item in my_weibo_list['weibo_list']:
         text = re.sub(r'<[^>]*>', '', item['text'])
@@ -140,7 +142,7 @@ def api_wordcloud():
     print weekchart
     print daychart
 
-    return jsonify({ 'ans': ans, 'time': timepoint, 'week': weekchart, 'day': daychart, 'lon':lon, 'lat':lat}), 201
+    return jsonify({ 'ans': ans, 'time': timepoint, 'week': weekchart, 'day': daychart, 'lon':lon, 'lat':lat, 'person':person_info}), 201
 
 # @app.route('/user/<name>')
 # def user(name=None):
