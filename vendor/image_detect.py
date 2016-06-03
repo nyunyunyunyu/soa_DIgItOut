@@ -36,6 +36,8 @@ def weibo_image_extract(weibo):
 
 def download_all_weibo_image(uid, image_url_list):
     image_cache_path = os.path.join(constant.IMAGE_CACHE_DIR, uid)
+    if not os.path.exists(constant.IMAGE_CACHE_DIR):
+        os.mkdir(constant.IMAGE_CACHE_DIR)
     if not os.path.exists(image_cache_path):
         os.mkdir(image_cache_path)
     for url in image_url_list:

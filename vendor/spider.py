@@ -176,34 +176,11 @@ class Spider:
         showjson(my_weibo_list, 0)
         return my_weibo_list
 
-    def impRe(self, target):
-        info_dict = {}
-        pattern = u'昵称:([^\|]*)\|'
-        m = re.search(pattern, target)
-        if m:
-            info_dict['name'] = m.group(1)
-
-        pattern = u'性别:([^\|])'
-        m = re.search(pattern, target)
-        if m:
-            info_dict['sex'] = m.group(1)
-
-        pattern = u'地区:([^\|]*)'
-        m = re.search(pattern, target)
-        if m:
-            info_dict['hometown'] = m.group(1)
-        return info_dict
-
     def get_info(self, inputid):
-        time_now = int(time.time())
-        inputUrl = constant.HOME_PAGE + inputid + constant.INFO_PAGE
-        tmpContent = self.get_content(inputUrl)
-        soup = BeautifulSoup(tmpContent.text, "html.parser")
-
-        divlabel = soup.find_all('div', 'tip')
-        personalInfo = divlabel[0].next_sibling.get_text('|', strip=True)
-        schoolInfo = divlabel[1].next_sibling.get_text()
-        info_dict = self.impRe(personalInfo)
+        res=requests.get('https://api.weibo.com/2/users/show.json',
+                         params={'source': constant.WEIBO_API_KEY, 'uid': inputid},
+                         cookies=self.cookdic)
+        info_dict = json.loads(res.text)
         # get_weibo(inputid)
         return info_dict
 
