@@ -79,7 +79,6 @@ class Spider:
                 continue
             if tmp == 1:
                 return my_weibo_list
-            print tmp.text
             s = json.loads(tmp.text)
 
             if 'card_group' not in s['cards'][0]:
@@ -91,7 +90,6 @@ class Spider:
             for k in s['cards'][0]['card_group']:
                 if 'mblog' in k:
                     weibo_list.append(k['mblog'])
-            print 'len(weibo_list)', len(weibo_list)
             for weibo in weibo_list:
                 my_weibo = {}
                 # showjson(weibo, 0)
@@ -115,7 +113,6 @@ class Spider:
                             pattern = u'poiid=([^\&]*)\&amp'
                             mm = re.search(pattern, url_data)
                             if mm:
-                                print "type 1 ok"
                                 # print mm.group(1)
                                     # print mm.group(1)
                                 # print url_data
@@ -135,7 +132,6 @@ class Spider:
                                 if mmm:
                                     # print mmm.group(1)
                                     placeid = mmm.group(1)
-                                    print 'type 2 ok2'
                                     url = "http://place.weibo.com/index.php?_p=place_page&_a=poi_map_right&poiid="+placeid
                                     # newcookiedic = login.getCookies([{'no':username, 'psw':password}])[0]
                                     content = self.get_content(url)
