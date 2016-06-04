@@ -101,7 +101,6 @@ def api_wordcloud():
     #
     url = 'http://qingyu.thunlp.org/api/KeywordExtract'
     r = requests.post(url, data=data)
-    print (r.text)
     ans = json.loads(r.text)['Result']
     # print ans[0]
     # time
