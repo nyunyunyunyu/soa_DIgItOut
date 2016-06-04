@@ -170,7 +170,7 @@ class Spider:
                 #     my_weibo['original_pic'] = weibo['original_pic']
                 my_weibo_list.append(my_weibo)
 
-        showjson(my_weibo_list, 0)
+        # showjson(my_weibo_list, 0)
         return my_weibo_list
 
     def get_info(self, inputid):
