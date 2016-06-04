@@ -32,7 +32,6 @@ def api_piccluster():
     if d is None:
         abort(400) # missing arguments
 
-    print d['username']
 
     my_spider = Spider()
     idstr = my_spider.username_to_uid( d['username'] )
@@ -59,10 +58,8 @@ def api_wordcloud():
         abort(400) # missing arguments
 
     usrname_str = d['text']
-    print (usrname_str)
     my_spider = Spider()
     uid_str = my_spider.username_to_uid( usrname_str )
-    print uid_str
     latest, my_weibo_list = my_spider.crawl( uid_str )
 
     # rd = open('./static/my_weibo_list.json', 'r')
@@ -126,8 +123,7 @@ def api_wordcloud():
         for j in range(24):
             timepoint.append([i, j, temp_time[i][j]])
 
-    print weekchart
-    print daychart
+
 
     return jsonify({ 'ans': ans, 'time': timepoint, 'week': weekchart, 'day': daychart, 'lon':lon, 'lat':lat, 'person':person_info}), 201
 
